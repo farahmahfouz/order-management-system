@@ -4,7 +4,7 @@ import Heading from "../../ui/Heading";
 import Row from "../../ui/Row";
 
 import Spinner from "../../ui/Spinner";
-import OrderItem from "./orderItem";
+import OrderItem from "./OrderItem";
 import { useTodayOrders } from "./useTodayOrders";
 
 const StyledToday = styled.div`
