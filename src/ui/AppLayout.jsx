@@ -10,6 +10,10 @@ const StyledAppLayout = styled.div`
   grid-template-rows: auto 1fr;
   height: 100vh;
 
+  @media (max-width: 1024px) {
+    grid-template-columns: 7rem 1fr;
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }

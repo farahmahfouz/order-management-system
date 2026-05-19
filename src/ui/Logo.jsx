@@ -1,3 +1,4 @@
+// Logo.jsx
 import styled from "styled-components";
 import { useDarkMode } from "../context/DarkModeContext";
 
@@ -8,11 +9,18 @@ const StyledLogo = styled.div`
 const Img = styled.img`
   height: 9.6rem;
   width: auto;
+
+  @media (max-width: 1024px) {
+    height: 4rem;
+  }
+
+  @media (max-width: 768px) {
+    height: 9.6rem;
+  }
 `;
 
 function Logo() {
   const { isDarkMode } = useDarkMode();
-
   const src = isDarkMode ? "/logo-dark.png" : "/logo-light.png";
 
   return (

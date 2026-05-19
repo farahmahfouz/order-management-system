@@ -55,6 +55,8 @@ const Button = styled.button`
 
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
+
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
 `;
 
 Button.defaultProps = {

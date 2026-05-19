@@ -8,7 +8,7 @@ const StyledPage = styled.div`
 `;
 
 const LeftSide = styled.div`
-  flex: 1;
+  flex: 1.5;
   background-image: url('/logo.png');
   background-size: cover; 
   background-position: center; 
@@ -22,7 +22,7 @@ const RightSide = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background-color: #ffffff; 
+  background-color: var(--color-grey-0);
    @media (max-width: 768px) {
     flex: none;
     width: 100%;

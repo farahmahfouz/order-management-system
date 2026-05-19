@@ -1,3 +1,4 @@
+import { Children } from "react";
 import styled from "styled-components";
 
 const StyledFormRow = styled.div`
@@ -5,6 +6,16 @@ const StyledFormRow = styled.div`
   flex-direction: column;
   gap: 0.8rem;
   padding: 1.2rem 0;
+`;
+const InputWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+   & input {
+    width: 100%;
+  }
 `;
 
 const Label = styled.label`
@@ -17,10 +28,11 @@ const Error = styled.span`
 `;
 
 function FormRowVertical({ label, error, children }) {
+  const firstChild = Children.toArray(children)[0];
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children.props.id}>{label}</Label>}
-      {children}
+      {label && <Label htmlFor={firstChild?.props?.id}>{label}</Label>}
+      <InputWrapper>{children}</InputWrapper>
       {error && <Error>{error}</Error>}
     </StyledFormRow>
   );

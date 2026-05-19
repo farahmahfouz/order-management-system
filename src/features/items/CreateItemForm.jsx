@@ -61,7 +61,7 @@ function CreateItemForm({ itemToEdit = {}, onCloseModal }) {
                         value: 1,
                         message: 'The Price should be at least one'
                     }
-                })} />
+                })} min={1}/>
             </FormRow>
 
             <FormRow label='Item category' error={errors?.category?.message}>
@@ -96,7 +96,7 @@ function CreateItemForm({ itemToEdit = {}, onCloseModal }) {
             <FormRow label='Stock' error={errors?.stock?.message}>
                 <Input type='number' id='stockQuantity' {...register('stockQuantity', {
                     required: 'This field is required'
-                })} />
+                })} min={1}/>
             </FormRow>
 
             <FormRow label='Item photo' error={errors?.image?.message}>

@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { format  } from"date-fns";
+import { format } from "date-fns";
 import {
-    HiOutlineCurrencyDollar,
-    HiOutlineClipboardDocumentList,
-    HiOutlineClock,
+  HiOutlineCurrencyDollar,
+  HiOutlineClipboardDocumentList,
+  HiOutlineClock,
 } from "react-icons/hi2";
 
 import DataItem from "../../ui/DataItem";
@@ -163,71 +163,73 @@ const Img = styled.img`
 `;
 
 function ItemDataBox({ item }) {
-    const {
-        _id,
-        updatedAt,
-        name,
-        price,
-        image,
-        expiryDate,
-        description,
-    } = item;
+  const {
+    _id,
+    updatedAt,
+    name,
+    price,
+    image,
+    expiryDate,
+    description,
+  } = item;
 
-    return (
-        <StyledOrderDataBox>
-            <Header>
-                <div>
-                    <HiOutlineClipboardDocumentList />
-                    <p>Item <span>#{_id.slice(-6)}</span></p>
-                </div>
-            </Header>
+  return (
+    <StyledOrderDataBox>
+      <Header>
+        <div>
+          <HiOutlineClipboardDocumentList />
+          <p>Item <span>#{_id.slice(-6)}</span></p>
+        </div>
+      </Header>
 
-            <Section>
-                <ImageContainer>
-                    <Img src={image || 'logo.png'} alt={name} />
-                </ImageContainer>
-                
-                <ContentContainer>
-                    <ItemsList>
-                        <ItemRow>
-                            <div className="item-info">
-                                <span className="item-name">{name}</span>
-                                <span className="item-price">
-                                    {formatCurrency ? formatCurrency(price) : `$${price}`}
-                                </span>
-                            </div>
-                        </ItemRow>
-                        
-                        {description && (
-                            <div style={{ marginTop: '1rem', color: 'var(--color-grey-600)' }}>
-                                {description}
-                            </div>
-                        )}
-                        
-                        {expiryDate && (
-                            <div style={{ marginTop: '6rem', color: 'var(--color-grey-600)' }}>
-                                <strong>Expires:</strong> {format(new Date(expiryDate), "MMM dd, yyyy")}
-                            </div>
-                        )}
-                    </ItemsList>
+      <Section>
+        <ImageContainer>
+          <Img src={image || 'logo.png'} alt={name} />
+        </ImageContainer>
 
-                    <Price>
-                        <DataItem icon={<HiOutlineCurrencyDollar />} label="Price">
-                            {formatCurrency ? formatCurrency(price) : `$${price}`}
-                        </DataItem>
-                        <p>Item Price</p>
-                    </Price>
-                </ContentContainer>
-            </Section>
+        <ContentContainer>
+          <ItemsList>
+            <ItemRow>
+              <div className="item-info">
+                <span className="item-name">{name}</span>
+                <span className="item-price">
+                  {formatCurrency ? formatCurrency(price) : `$${price}`}
+                </span>
+              </div>
+            </ItemRow>
 
-            <Footer>
-                <p>
-                    <HiOutlineClock style={{ display: 'inline', marginRight: '0.5rem' }} />
-                    Created {format(new Date(updatedAt), "EEE, MMM dd yyyy, p")}
-                </p>
-            </Footer>
-        </StyledOrderDataBox>
-    );
+            {description && (
+              <div style={{ marginTop: '1rem', color: 'var(--color-grey-600)' }}>
+                {description}
+              </div>
+            )}
+
+            {expiryDate && (
+              <div style={{ marginTop: '6rem', color: 'var(--color-grey-600)' }}>
+                <strong>Expires:</strong> {format(new Date(expiryDate), "MMM dd, yyyy")}
+              </div>
+            )}
+          </ItemsList>
+
+          <Price>
+            <DataItem icon={<HiOutlineCurrencyDollar />} label="Price">
+              {formatCurrency ? formatCurrency(price) : `$${price}`}
+            </DataItem>
+            <p>Item Price</p>
+          </Price>
+        </ContentContainer>
+      </Section>
+
+      <Footer>
+        <p>
+          <HiOutlineClock style={{ display: 'inline', marginRight: '0.5rem' }} />
+          Created {updatedAt && !isNaN(new Date(updatedAt))
+            ? format(new Date(updatedAt), "EEE, MMM dd yyyy, p")
+            : '—'}
+        </p>
+      </Footer>
+    </StyledOrderDataBox>
+  );
 }
 
 export default ItemDataBox;

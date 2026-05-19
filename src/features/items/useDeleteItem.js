@@ -12,7 +12,7 @@ export function useDeleteItem() {
 
       queryClient.invalidateQueries({
         queryKey: ["items"],
-         exact: false
+        exact: false,
       });
     },
     onError: (err) => toast.error(err.message),

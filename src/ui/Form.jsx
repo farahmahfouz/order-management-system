@@ -5,6 +5,8 @@ const Form = styled.form`
     props.type === "regular" &&
     css`
       padding: 2.4rem 4rem;
+      margin-top: 2rem;
+      width: 100%;
 
       /* Box */
       background-color: var(--color-grey-0);

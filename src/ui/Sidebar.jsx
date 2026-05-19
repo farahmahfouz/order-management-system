@@ -1,3 +1,4 @@
+// Sidebar.jsx
 import styled from "styled-components";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
@@ -10,6 +11,14 @@ const StyledSidebar = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+  width: 26rem;
+  transition: width 0.3s ease;
+
+  @media (max-width: 1024px) {
+    width: 7rem;
+    padding: 3.2rem 1.2rem;
+    align-items: center;
+  }
 
   @media (max-width: 768px) {
     position: fixed;
@@ -18,7 +27,8 @@ const StyledSidebar = styled.aside`
     height: 100vh;
     z-index: 1000;
     width: 26rem;
-    transition: left 0.3s ease-in-out;
+    padding: 3.2rem 2.4rem;
+    align-items: flex-start;
     background-color: white;
   }
 `;

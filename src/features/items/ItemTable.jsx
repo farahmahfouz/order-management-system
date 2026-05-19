@@ -8,8 +8,9 @@ import { useItems } from './useItems'
 
 function ItemTable() {
     const { isPending, items, count, limit, page } = useItems();
-    if (isPending || !items?.length) return <Spinner />
-    if (!items.length) return <Empty resourceName='items' />
+    if (isPending) return <Spinner />
+
+    if (!items?.length) return <Empty resourceName="items" />
     return (
         <Menus>
             <Table columns="0.2fr 0.3fr 0.6fr 0.4fr 0.4fr 0.4fr 0.5fr 0.4fr 0.1fr">

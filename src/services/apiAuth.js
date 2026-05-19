@@ -36,8 +36,14 @@ export const updatePassword = async ({ passwordCurrent, password }) => {
   return response.data.data.user;
 };
 
-export const forgotPassword = async ({ email }) => {
-  const response = await axiosInstance.post("users/forgot-password", { email });
-  return response;
+export const forgotPassword = async (data) => {
+  const response = await axiosInstance.post("/users/forgot-password", data);
+  return response.data;
 };
 
+export const resetPassword = async ({ token, password }) => {
+  const response = await axiosInstance.patch(`/users/reset-password/${token}`, {
+    password,
+  });
+  return response.data;
+};
