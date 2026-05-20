@@ -20,6 +20,7 @@ import { useDeleteItem } from './useDeleteItem';
 import CreateItemForm from "./CreateItemForm";
 import toast from "react-hot-toast";
 import { useCart } from "../../context/CartContext";
+import { usePermissions } from "../authentication/usePermissions";
 
 const Img = styled.img`
   display: block;
@@ -87,6 +88,7 @@ function ItemRow({ item }) {
   const navigate = useNavigate();
   const { isDeleteing, deleteItem } = useDeleteItem();
   const { addToCart } = useCart();
+  const { permissions } = usePermissions();
 
   const isExpired = new Date(expiryDate) < new Date();
 
@@ -130,13 +132,17 @@ function ItemRow({ item }) {
                 </Menus.Button>
             }
 
-            <Modal.Open opens='edit'>
-              <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
-            </Modal.Open>
+            {permissions.itemsWrite && (
+              <>
+                <Modal.Open opens='edit'>
+                  <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+                </Modal.Open>
 
-            <Modal.Open opens='delete'>
-              <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-            </Modal.Open>
+                <Modal.Open opens='delete'>
+                  <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+                </Modal.Open>
+              </>
+            )}
           </Menus.List>
         </Menus.Menu>
 

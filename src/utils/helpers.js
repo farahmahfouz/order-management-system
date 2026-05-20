@@ -25,6 +25,23 @@ export const getToday = function (options = {}) {
 };
 
 export const formatCurrency = (value) =>
-  new Intl.NumberFormat('en', { style: 'currency', currency: 'USD' }).format(
+  new Intl.NumberFormat('en-EG', { style: 'currency', currency: 'EGP' }).format(
     value
   );
+
+const DEFAULT_AVATAR = '/default-user.jpg';
+const API_ORIGIN = 'http://localhost:3000';
+
+export function getUserAvatarSrc(image) {
+  const raw = Array.isArray(image) ? image[0] : image;
+
+  if (!raw || typeof raw !== 'string' || !raw.trim()) {
+    return DEFAULT_AVATAR;
+  }
+
+  if (raw.startsWith('http')) return raw;
+
+  if (raw.startsWith('/')) return `${API_ORIGIN}${raw}`;
+
+  return `${API_ORIGIN}/${raw}`;
+}

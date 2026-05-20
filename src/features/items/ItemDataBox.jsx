@@ -184,7 +184,7 @@ function ItemDataBox({ item }) {
 
       <Section>
         <ImageContainer>
-          <Img src={image || 'logo.png'} alt={name} />
+          <Img src={image?.length ? image[0] : '/logo.png'} alt={name} />
         </ImageContainer>
 
         <ContentContainer>

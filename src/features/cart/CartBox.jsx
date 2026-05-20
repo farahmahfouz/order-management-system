@@ -47,7 +47,8 @@ function CartBox() {
         // Transform cart items to match backend format
         const items = cartItems.map(item => ({
             item: item._id,
-            quantity: item.quantity
+            quantity: item.quantity,
+            price: item.price
         }));
 
         createOrder(

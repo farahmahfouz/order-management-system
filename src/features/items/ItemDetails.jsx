@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useDeleteItem } from "./useDeleteItem";
 import { useCart } from "../../context/CartContext";
 import toast from "react-hot-toast";
+import { usePermissions } from './../authentication/usePermissions';
 
 
 const HeadingGroup = styled.div`
@@ -31,6 +32,7 @@ function ItemDetails() {
     const { isPending, item } = useItem();
     const { isDeleteing, deleteItem } = useDeleteItem();
     const { addToCart } = useCart();
+    const { permissions } = usePermissions();
 
 
     const moveBack = useMoveBack();
@@ -40,8 +42,8 @@ function ItemDetails() {
         addToCart(item);
         toast.success("Item added to cart successfully");
         navigate("/cart");
-      }
-    
+    }
+
 
     if (isPending) return <Spinner />;
     if (!item) return <Empty resourceName="item" />;
@@ -72,9 +74,11 @@ function ItemDetails() {
             <ButtonGroup>
 
                 <Modal>
-                    <Modal.Open opens="delete">
-                        <Button variation="danger">Delete</Button>
-                    </Modal.Open>
+                    {permissions.itemsWrite && (
+                        <Modal.Open opens="delete">
+                            <Button variation="danger">Delete</Button>
+                        </Modal.Open>
+                    )}
 
                     {isAvailable && !isExpired && (
                         <Button onClick={handleAddToCart}>Add to cart</Button>

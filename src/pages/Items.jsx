@@ -3,8 +3,11 @@ import ItemTable from "../features/items/ItemTable";
 import ItemTableOperations from "../features/items/ItemTableOperations";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
+import { usePermissions } from "../features/authentication/usePermissions";
 
 function Items() {
+  const { permissions, isLoading } = usePermissions();
+
   return (
     <>
       <Row type='horizontal'>
@@ -12,7 +15,7 @@ function Items() {
         <ItemTableOperations/>
       </Row>
       <ItemTable/>
-      <AddItem/>
+      {!isLoading && permissions.itemsWrite && <AddItem/>}
     </>
   )
 }

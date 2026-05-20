@@ -33,7 +33,7 @@ const completedOrders = orders?.filter(order => order.status === "completed");
         title="Sales"
         color="green"
         icon={<HiOutlineBanknotes />}
-        value={formatCurrency(sales)}
+        value={formatCurrency(sales) || 0}
       />
       <Stat
         title="Customer Numbers"

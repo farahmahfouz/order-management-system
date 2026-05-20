@@ -14,11 +14,14 @@ import AppLayout from "./ui/AppLayout"
 import GlobalStyles from "./styles/GlobalStyles"
 import Login from "./pages/Login";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import PermissionRoute from "./ui/PermissionRoute";
 import Account from "./pages/Account";
 import Order from "./pages/Order";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/Cart";
+import Integrations from "./pages/Integrations";
+import Reports from "./pages/Reports";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,10 +45,47 @@ function App() {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="items" element={<Items />} />
                 <Route path="items/:itemId" element={<Item />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="orders/:orderId" element={<Order />} />
-                <Route path="employees" element={<Employees />} />
+                <Route
+                  path="orders"
+                  element={
+                    <PermissionRoute permission="orders">
+                      <Orders />
+                    </PermissionRoute>
+                  }
+                />
+                <Route
+                  path="orders/:orderId"
+                  element={
+                    <PermissionRoute permission="orders">
+                      <Order />
+                    </PermissionRoute>
+                  }
+                />
+                <Route
+                  path="employees"
+                  element={
+                    <PermissionRoute permission="users">
+                      <Employees />
+                    </PermissionRoute>
+                  }
+                />
                 <Route path="account" element={<Account />} />
+                <Route
+                  path="integrations"
+                  element={
+                    <PermissionRoute permission="google">
+                      <Integrations />
+                    </PermissionRoute>
+                  }
+                />
+                <Route
+                  path="reports"
+                  element={
+                    <PermissionRoute permission="reports">
+                      <Reports />
+                    </PermissionRoute>
+                  }
+                />
                 <Route path="cart" element={<Cart />} />
               </Route>
               <Route path="login" element={<Login />} />

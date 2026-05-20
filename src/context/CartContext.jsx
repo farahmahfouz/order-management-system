@@ -1,6 +1,19 @@
-import React, { useState, useContext, createContext } from 'react';
+import React, { useState, useContext, createContext, useEffect } from 'react';
 
-// Cart Context
+const CART_STORAGE_KEY = 'oms-cart';
+function loadCartFromStorage() {
+  try {
+    const saved = localStorage.getItem(CART_STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+}
+function saveCartToStorage(items) {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+}
+
+
 const CartContext = createContext();
 
 export const useCart = () => {
@@ -13,8 +26,12 @@ export const useCart = () => {
 
 // Cart Provider
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => loadCartFromStorage())
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    saveCartToStorage(cartItems);
+  }, [cartItems]);
 
   const addToCart = (item) => {
     setCartItems(prev => {
@@ -49,6 +66,7 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCartItems([]);
+    localStorage.removeItem(CART_STORAGE_KEY);
   };
 
   const getTotalCost = () => {

@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useUser } from './useUser';
+import { getUserAvatarSrc } from "../../utils/helpers";
 
 const StyledUserAvatar = styled.div`
   display: flex;
@@ -12,7 +14,6 @@ const StyledUserAvatar = styled.div`
 
 const Avatar = styled.img`
   display: block;
-  width: 4rem;
   width: 3.6rem;
   aspect-ratio: 1;
   object-fit: cover;
@@ -22,12 +23,24 @@ const Avatar = styled.img`
 `;
 
 function UserAvatar() {
-  const { user } = useUser();
-  const { name, image } = user;
+  const { user, isLoading } = useUser();
+  const [avatarSrc, setAvatarSrc] = useState('/default-user.jpg');
+
+  useEffect(() => {
+    if (user) setAvatarSrc(getUserAvatarSrc(user.image));
+  }, [user?.image]);
+
+  if (isLoading || !user) return null;
+
+  const { name } = user;
 
   return (
     <StyledUserAvatar>
-      <Avatar src={image || '/default-user.jpg'} alt={`Avatar of ${name}`} />
+      <Avatar
+        src={avatarSrc}
+        alt={`Avatar of ${name}`}
+        onError={() => setAvatarSrc('/default-user.jpg')}
+      />
       <span>{name}</span>
     </StyledUserAvatar>
   )
