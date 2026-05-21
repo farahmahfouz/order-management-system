@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { HiOutlineChartBar, HiOutlineCircleStack, HiOutlineCog6Tooth, HiOutlineDocumentChartBar, HiOutlineHome, HiOutlineUserGroup } from "react-icons/hi2";
 import { usePermissions } from "../features/authentication/usePermissions";
+import { useTranslation } from "react-i18next";
 
 const NavList = styled.ul`
   display: flex;
@@ -63,26 +64,27 @@ const StyledNavLink = styled(NavLink)`
 
 function MainNav() {
   const { permissions, isLoading } = usePermissions();
+  const { t } = useTranslation();
 
   return (
     <nav style={{ width: "100%" }}>
       <NavList>
-        <li><StyledNavLink to='/dashboard'><HiOutlineHome /><span>Home</span></StyledNavLink></li>
-        <li><StyledNavLink to='/items'><HiOutlineCircleStack /><span>Items</span></StyledNavLink></li>
+        <li><StyledNavLink to='/dashboard'><HiOutlineHome /><span>{t("nav.home")}</span></StyledNavLink></li>
+        <li><StyledNavLink to='/items'><HiOutlineCircleStack /><span>{t("nav.items")}</span></StyledNavLink></li>
         {!isLoading && permissions.orders && (
-          <li><StyledNavLink to='/orders'><HiOutlineDocumentChartBar /><span>Orders</span></StyledNavLink></li>
+          <li><StyledNavLink to='/orders'><HiOutlineDocumentChartBar /><span>{t("nav.orders")}</span></StyledNavLink></li>
         )}
         {!isLoading && permissions.users && (
-          <li><StyledNavLink to='/employees'><HiOutlineUserGroup /><span>Employees</span></StyledNavLink></li>
+          <li><StyledNavLink to='/employees'><HiOutlineUserGroup /><span>{t("nav.employees")}</span></StyledNavLink></li>
         )}
         {!isLoading && permissions.google && (
-          <li><StyledNavLink to='/integrations'><HiOutlineCog6Tooth /><span>Integrations</span></StyledNavLink></li>
+          <li><StyledNavLink to='/integrations'><HiOutlineCog6Tooth /><span>{t("nav.integrations")}</span></StyledNavLink></li>
         )}
         {!isLoading && permissions.reports && (
           <li>
             <StyledNavLink to='/reports'>
               <HiOutlineChartBar />
-              <span>Sales</span>
+              <span>{t("nav.sales")}</span>
             </StyledNavLink>
           </li>
         )}

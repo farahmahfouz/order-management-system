@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import DashboardBox from "./DashboardBox";
 import Heading from "../../ui/Heading";
 import {
@@ -16,7 +17,6 @@ import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
 
-  /* Hack to change grid line colors */
   & .recharts-cartesian-grid-horizontal line,
   & .recharts-cartesian-grid-vertical line {
     stroke: var(--color-grey-300);
@@ -24,12 +24,13 @@ const StyledSalesChart = styled(DashboardBox)`
 `;
 
 function SalesChart({ orders = [] }) {
+  const { t } = useTranslation();
   const { isDarkMode } = useDarkMode();
 
   if (!orders || !Array.isArray(orders)) {
     return (
       <StyledSalesChart>
-        <Heading as="h2">No sales data available</Heading>
+        <Heading as="h2">{t("dashboard.salesChart.noData")}</Heading>
       </StyledSalesChart>
     );
   }
@@ -41,27 +42,37 @@ function SalesChart({ orders = [] }) {
   });
 
   const data = allDates.map((date) => {
-    const dayOrders = orders.filter((order) => 
-      order && 
-      order.createdAt && 
-      isSameDay(new Date(order.createdAt), date)
+    const dayOrders = orders.filter(
+      (order) =>
+        order &&
+        order.createdAt &&
+        isSameDay(new Date(order.createdAt), date)
     );
 
-    const completedOrders = dayOrders.filter(order => order.status === "completed");
-    const pendingOrders = dayOrders.filter(order => order.status === "pending");
-    
-    const completedSales = completedOrders.reduce((sum, order) => sum + (order.totalCost || 0), 0);
-    
-    const pendingSales = pendingOrders.reduce((sum, order) => sum + (order.totalCost || 0), 0);
-    
-    const extrasSales = completedSales * 0.15;
+    const completedOrders = dayOrders.filter(
+      (order) => order.status === "completed"
+    );
+    const pendingOrders = dayOrders.filter(
+      (order) => order.status === "pending"
+    );
 
+    const completedSales = completedOrders.reduce(
+      (sum, order) => sum + (order.totalCost || 0),
+      0
+    );
+
+    const pendingSales = pendingOrders.reduce(
+      (sum, order) => sum + (order.totalCost || 0),
+      0
+    );
+
+    const extrasSales = completedSales * 0.15;
 
     return {
       label: format(date, "MMM dd"),
-      totalSales: completedSales, 
-      extrasSales: extrasSales,
-      pendingSales: pendingSales,
+      totalSales: completedSales,
+      extrasSales,
+      pendingSales,
       date: format(date, "yyyy-MM-dd"),
     };
   });
@@ -85,8 +96,10 @@ function SalesChart({ orders = [] }) {
   return (
     <StyledSalesChart>
       <Heading as="h2">
-        Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash;{" "}
-        {format(allDates.at(-1), "MMM dd yyyy")}{" "}
+        {t("dashboard.salesChart.title", {
+          from: format(allDates.at(0), "MMM dd yyyy"),
+          to: format(allDates.at(-1), "MMM dd yyyy"),
+        })}
       </Heading>
 
       <ResponsiveContainer height={300} width="100%">
@@ -102,7 +115,7 @@ function SalesChart({ orders = [] }) {
             tickLine={{ stroke: colors.text }}
           />
           <CartesianGrid strokeDasharray="4" />
-          <Tooltip 
+          <Tooltip
             contentStyle={{ backgroundColor: colors.background }}
             labelStyle={{ color: colors.text }}
           />
@@ -112,8 +125,8 @@ function SalesChart({ orders = [] }) {
             stroke={colors.totalSales.stroke}
             fill={colors.totalSales.fill}
             strokeWidth={2}
-            name="Completed sales"
-            unit="$"
+            name={t("dashboard.salesChart.completedSales")}
+            unit="EGP"
           />
           <Area
             dataKey="pendingSales"
@@ -121,8 +134,8 @@ function SalesChart({ orders = [] }) {
             stroke={colors.pendingSales.stroke}
             fill={colors.pendingSales.fill}
             strokeWidth={2}
-            name="Pending sales"
-            unit="$"
+            name={t("dashboard.salesChart.pendingSales")}
+            unit="EGP"
           />
           <Area
             dataKey="extrasSales"
@@ -130,8 +143,8 @@ function SalesChart({ orders = [] }) {
             stroke={colors.extrasSales.stroke}
             fill={colors.extrasSales.fill}
             strokeWidth={2}
-            name="Extras sales"
-            unit="$"
+            name={t("dashboard.salesChart.extrasSales")}
+            unit="EGP"
           />
         </AreaChart>
       </ResponsiveContainer>

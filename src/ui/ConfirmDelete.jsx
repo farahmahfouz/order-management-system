@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "./Button";
 import Heading from "./Heading";
+import { useTranslation } from "react-i18next";
 
 const StyledConfirmDelete = styled.div`
   width: 40rem;
@@ -21,13 +22,15 @@ const StyledConfirmDelete = styled.div`
 `;
 
 function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
+  const { t } = useTranslation();
+  const resource = t(`common.resources.${resourceName}`, {
+    defaultValue: resourceName,
+  });
+
   return (
     <StyledConfirmDelete>
-      <Heading as="h3">Delete {resourceName}</Heading>
-      <p>
-        Are you sure you want to delete this {resourceName} permanently? This
-        action cannot be undone.
-      </p>
+      <Heading as="h3">{t("common.deleteTitle", { resource })}</Heading>
+      <p>{t("common.deleteMessage", { resource })}</p>
 
       <div>
         <Button
@@ -35,13 +38,13 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
           disabled={disabled}
           onClick={onCloseModal}
         >
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button variation="danger" disabled={disabled} onClick={async () => {
-          await onConfirm();     // احذف
-          onCloseModal();        // اقفل المودال
+          await onConfirm();
+          onCloseModal();
         }}>
-          Delete
+          {t("common.delete")}
         </Button>
       </div>
     </StyledConfirmDelete>

@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
@@ -7,6 +8,7 @@ import Input from "../../ui/Input";
 import { useUpdatePassword } from "./useUpdatePassword";
 
 function UpdatePasswordForm() {
+  const { t } = useTranslation();
   const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
 
@@ -19,7 +21,7 @@ function UpdatePasswordForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
-        label="Current Password"
+        label={t("account.form.currentPassword")}
         error={errors?.passwordCurrent?.message}
       >
         <Input
@@ -28,25 +30,25 @@ function UpdatePasswordForm() {
           autoComplete="current-password"
           disabled={isUpdating}
           {...register("passwordCurrent", {
-            required: "This field is required"
+            required: t("account.validation.required"),
           })}
         />
       </FormRow>
 
       <FormRow
-        label="New password (min 8 chars)"
+        label={t("account.form.newPassword")}
         error={errors?.password?.message}
       >
         <Input
           type="password"
           id="password"
-          autoComplete="password"
+          autoComplete="new-password"
           disabled={isUpdating}
           {...register("password", {
-            required: "This field is required",
+            required: t("account.validation.required"),
             minLength: {
               value: 8,
-              message: "Password needs a minimum of 8 characters",
+              message: t("account.validation.passwordMin"),
             },
           })}
         />
@@ -54,9 +56,11 @@ function UpdatePasswordForm() {
 
       <FormRow>
         <Button onClick={reset} type="reset" variation="secondary">
-          Cancel
+          {t("common.cancel")}
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+        <Button disabled={isUpdating}>
+          {t("account.form.updatePasswordBtn")}
+        </Button>
       </FormRow>
     </Form>
   );

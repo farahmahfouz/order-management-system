@@ -19,6 +19,8 @@ import { useDeleteItem } from "./useDeleteItem";
 import { useCart } from "../../context/CartContext";
 import toast from "react-hot-toast";
 import { usePermissions } from './../authentication/usePermissions';
+import { useTranslation } from "react-i18next";
+import i18n from './../../i18n';
 
 
 const HeadingGroup = styled.div`
@@ -33,6 +35,8 @@ function ItemDetails() {
     const { isDeleteing, deleteItem } = useDeleteItem();
     const { addToCart } = useCart();
     const { permissions } = usePermissions();
+    const { t } = useTranslation();
+    const isRTL = i18n.language === 'ar';
 
 
     const moveBack = useMoveBack();
@@ -40,13 +44,13 @@ function ItemDetails() {
 
     function handleAddToCart() {
         addToCart(item);
-        toast.success("Item added to cart successfully");
+        toast.success(t("items.details.addedToCart"));
         navigate("/cart");
     }
 
 
     if (isPending) return <Spinner />;
-    if (!item) return <Empty resourceName="item" />;
+    if (!item) return <Empty  resourceName={t("items.details.notFound")} />;
 
     const { category, _id: itemId, isAvailable, expiryDate } = item;
 
@@ -63,10 +67,10 @@ function ItemDetails() {
         <>
             <Row type="horizontal">
                 <HeadingGroup>
-                    <Heading as="h1">Item #{itemId.slice(0, 5)}</Heading>
-                    <Tag type={statusToTagName[category]}>{category}</Tag>
+                    <Heading as="h1"> {t("items.details.title", { id: itemId.slice(0, 5) })}</Heading>
+                    <Tag type={statusToTagName[category]}>{t(`items.filter.${category}`)}</Tag>
                 </HeadingGroup>
-                <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+                <ButtonText onClick={moveBack}> {isRTL ? <span>&rarr;</span> : <span>&larr;</span>} {t("common.back")}</ButtonText>
             </Row>
 
             <ItemDataBox item={item} />
@@ -76,12 +80,12 @@ function ItemDetails() {
                 <Modal>
                     {permissions.itemsWrite && (
                         <Modal.Open opens="delete">
-                            <Button variation="danger">Delete</Button>
+                            <Button variation="danger">{t("common.delete")}</Button>
                         </Modal.Open>
                     )}
 
                     {isAvailable && !isExpired && (
-                        <Button onClick={handleAddToCart}>Add to cart</Button>
+                        <Button onClick={handleAddToCart}>{t("common.addToCart")}</Button>
                     )}
 
                     <Modal.Window name="delete">
@@ -98,7 +102,7 @@ function ItemDetails() {
                 </Modal>
 
                 <Button variation="secondary" onClick={moveBack}>
-                    Back
+                {t("common.back")}
                 </Button>
             </ButtonGroup>
         </>

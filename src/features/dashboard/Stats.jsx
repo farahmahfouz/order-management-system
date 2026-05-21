@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   HiOutlineBanknotes,
   HiOutlineBriefcase,
@@ -8,44 +9,45 @@ import Stat from "./Stat";
 import { formatCurrency } from "../../utils/helpers";
 
 function Stats({ orders }) {
-  // 1.
+  const { t } = useTranslation();
+
   const numOrders = orders?.length;
-
-  // 2.
   const sales = orders?.reduce((acc, cur) => acc + cur.totalCost, 0);
+  const uniqueCustomers = [
+    ...new Set(orders?.map((order) => order.customerName)),
+  ].length;
 
-  // 3.
-  const uniqueCutomers =  [...new Set(orders?.map(order => order.customerName))].length;
-
-  // 4.
-const completedOrders = orders?.filter(order => order.status === "completed");
-  const averageOrderValue = completedOrders?.length > 0 ? sales / completedOrders?.length : 0;
+  const completedOrders = orders?.filter(
+    (order) => order.status === "completed"
+  );
+  const averageOrderValue =
+    completedOrders?.length > 0 ? sales / completedOrders.length : 0;
 
   return (
     <>
       <Stat
-        title="Orders"
+        title={t("dashboard.stats.orders")}
         color="blue"
         icon={<HiOutlineBriefcase />}
         value={numOrders}
       />
       <Stat
-        title="Sales"
+        title={t("dashboard.stats.sales")}
         color="green"
         icon={<HiOutlineBanknotes />}
         value={formatCurrency(sales) || 0}
       />
       <Stat
-        title="Customer Numbers"
+        title={t("dashboard.stats.customers")}
         color="indigo"
         icon={<HiOutlineCalendarDays />}
-        value={uniqueCutomers}
+        value={uniqueCustomers}
       />
       <Stat
-        title="Avg Order Value"
+        title={t("dashboard.stats.avgOrderValue")}
         color="yellow"
         icon={<HiOutlineChartBar />}
-         value={formatCurrency(averageOrderValue)}
+        value={formatCurrency(averageOrderValue)}
       />
     </>
   );

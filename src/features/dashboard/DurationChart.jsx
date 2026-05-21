@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import Heading from "../../ui/Heading";
 import {
   Cell,
@@ -11,11 +12,9 @@ import {
 import { useDarkMode } from "../../context/DarkModeContext";
 
 const ChartBox = styled.div`
-  /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
-
   padding: 2.4rem 3.2rem;
   grid-column: 3 / span 2;
 
@@ -28,112 +27,47 @@ const ChartBox = styled.div`
   }
 `;
 
-const startDataLight = [
-  {
-    category: "Low ($0-50)",
-    value: 0,
-    color: "#ef4444",
-  },
-  {
-    category: "Medium ($51-100)",
-    value: 0,
-    color: "#f97316",
-  },
-  {
-    category: "High ($101-200)",
-    value: 0,
-    color: "#eab308",
-  },
-  {
-    category: "Premium ($201+)",
-    value: 0,
-    color: "#84cc16",
-  },
-];
+function getValueRangeStartData(t, isDarkMode) {
+  const colors = isDarkMode
+    ? ["#b91c1c", "#c2410c", "#a16207", "#4d7c0f"]
+    : ["#ef4444", "#f97316", "#eab308", "#84cc16"];
 
-const startDataDark = [
-  {
-    category: "Low ($0-50)",
+  return ["low", "medium", "high", "premium"].map((key, i) => ({
+    key,
+    category: t(`dashboard.charts.valueRange.${key}`),
     value: 0,
-    color: "#b91c1c",
-  },
-  {
-    category: "Medium ($51-100)",
-    value: 0,
-    color: "#c2410c",
-  },
-  {
-    category: "High ($101-200)",
-    value: 0,
-    color: "#a16207",
-  },
-  {
-    category: "Premium ($201+)",
-    value: 0,
-    color: "#4d7c0f",
-  },
-];
+    color: colors[i],
+  }));
+}
 
-const orderStatusDataLight = [
-  {
-    category: "Completed",
-    value: 0,
-    color: "#DF5333", 
-  },
-  {
-    category: "Pending",
-    value: 0,
-    color: "#424242",
-  },
-  {
-    category: "Cancelled",
-    value: 0,
-    color: "#FFAF9B", 
-  },
-  {
-    category: "Expired",
-    value: 0,
-    color: "#6b7280", 
-  },
-];
+function getStatusStartData(t, isDarkMode) {
+  const statusKeys = ["completed", "pending", "cancelled", "expired"];
+  const colors = isDarkMode
+    ? ["#DF5333", "#424242", "#FFAF9B", "#4b5563"]
+    : ["#DF5333", "#424242", "#FFAF9B", "#6b7280"];
 
-const orderStatusDataDark = [
-  {
-    category: "Completed",
+  return statusKeys.map((key, i) => ({
+    key,
+    category: t(`orders.filter.${key}`),
     value: 0,
-    color: "#DF5333",
-  },
-  {
-    category: "Pending",
-    value: 0,
-    color: "#424242",
-  },
-  {
-    category: "Cancelled",
-    value: 0,
-    color: "#FFAF9B",
-  },
-  {
-    category: "Expired",
-    value: 0,
-    color: "#4b5563",
-  },
-];
+    color: colors[i],
+  }));
+}
+
+function incArrayValue(arr, fieldKey) {
+  return arr.map((obj) =>
+    obj.key === fieldKey ? { ...obj, value: obj.value + 1 } : obj
+  );
+}
 
 function prepareOrderValueData(startData, orders) {
-  function incArrayValue(arr, field) {
-    return arr.map((obj) =>
-      obj.category === field ? { ...obj, value: obj.value + 1 } : obj
-    );
-  }
-
   const data = orders
     .reduce((arr, cur) => {
       const totalCost = cur.totalCost || 0;
-      if (totalCost <= 50) return incArrayValue(arr, "Low ($0-50)");
-      if (totalCost <= 100) return incArrayValue(arr, "Medium ($51-100)");
-      if (totalCost <= 200) return incArrayValue(arr, "High ($101-200)");
-      if (totalCost > 200) return incArrayValue(arr, "Premium ($201+)");
+      if (totalCost <= 50) return incArrayValue(arr, "low");
+      if (totalCost <= 100) return incArrayValue(arr, "medium");
+      if (totalCost <= 200) return incArrayValue(arr, "high");
+      if (totalCost > 200) return incArrayValue(arr, "premium");
       return arr;
     }, startData)
     .filter((obj) => obj.value > 0);
@@ -142,19 +76,12 @@ function prepareOrderValueData(startData, orders) {
 }
 
 function prepareOrderStatusData(startData, orders) {
-  function incArrayValue(arr, field) {
-    return arr.map((obj) =>
-      obj.category === field ? { ...obj, value: obj.value + 1 } : obj
-    );
-  }
-
   const data = orders
     .reduce((arr, cur) => {
       const status = cur.status;
-      if (status === "completed") return incArrayValue(arr, "Completed");
-      if (status === "pending") return incArrayValue(arr, "Pending");
-      if (status === "cancelled") return incArrayValue(arr, "Cancelled");
-      if (status === "expired") return incArrayValue(arr, "Expired");
+      if (["completed", "pending", "cancelled", "expired"].includes(status)) {
+        return incArrayValue(arr, status);
+      }
       return arr;
     }, startData)
     .filter((obj) => obj.value > 0);
@@ -163,25 +90,26 @@ function prepareOrderStatusData(startData, orders) {
 }
 
 function OrdersDistributionChart({ orders = [], chartType = "status" }) {
+  const { t } = useTranslation();
   const { isDarkMode } = useDarkMode();
-  
+
   let startData, data, title;
-  
+
   if (chartType === "value") {
-    startData = isDarkMode ? startDataDark : startDataLight;
+    startData = getValueRangeStartData(t, isDarkMode);
     data = prepareOrderValueData(startData, orders);
-    title = "Orders by Value Range";
+    title = t("dashboard.charts.byValueRange");
   } else {
-    startData = isDarkMode ? orderStatusDataDark : orderStatusDataLight;
+    startData = getStatusStartData(t, isDarkMode);
     data = prepareOrderStatusData(startData, orders);
-    title = "Orders by Status";
+    title = t("dashboard.charts.byStatus");
   }
 
   if (!data.length) {
     return (
       <ChartBox>
         <Heading as="h2">{title}</Heading>
-        <p>No data available</p>
+        <p>{t("dashboard.charts.noData")}</p>
       </ChartBox>
     );
   }
@@ -205,7 +133,7 @@ function OrdersDistributionChart({ orders = [], chartType = "status" }) {
               <Cell
                 fill={entry.color}
                 stroke={entry.color}
-                key={entry.category}
+                key={entry.key}
               />
             ))}
           </Pie>

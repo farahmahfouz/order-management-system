@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
@@ -31,15 +31,18 @@ const StyledToggle = styled.button`
 
 const StyledList = styled.ul`
   position: fixed;
-
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
-`;
 
+  [dir='rtl'] & {
+    right: auto;
+    left: ${(props) => props.position.x}px;
+  }
+`;
 const StyledButton = styled.button`
   width: 100%;
   text-align: left;
@@ -90,11 +93,12 @@ function Toggle({ id }) {
     e.stopPropagation();
 
     const rect = e.target.closest("button").getBoundingClientRect();
+    const isRTL = document.documentElement.dir === 'rtl';
+
     setPosition({
-      x: window.innerWidth - rect.width - rect.x,
+      x: isRTL ? rect.x : window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8,
     });
-
     openId === "" || openId !== id ? open(id) : close();
   }
 
@@ -108,6 +112,12 @@ function Toggle({ id }) {
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close, false);
+
+  useEffect(() => {
+    const handleScroll = () => close();
+    window.addEventListener('scroll', handleScroll, true);
+    return () => window.removeEventListener('scroll', handleScroll, true);
+  }, [close]);
 
   if (openId !== id) return null;
 

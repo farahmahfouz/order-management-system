@@ -1,0 +1,291 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "items": "المنتجات",
+    "orders": "الطلبات",
+    "employees": "الموظفين",
+    "integrations": "التكاملات",
+    "sales": "المبيعات"
+  },
+  "common": {
+    "add": "إضافة",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "seeDetails": "عرض التفاصيل",
+    "clear": "مسح",
+    "search": "بحث",
+    "submit": "إرسال",
+    "addToCart": "أضف الى السلة",
+    "deleteTitle": "حذف {{resource}}",
+    "deleteMessage": "هل أنت متأكد من حذف {{resource}} نهائياً؟ لا يمكن التراجع عن هذا الإجراء.",
+    "resources": {
+      "item": "المنتج",
+      "order": "الطلب"
+    },
+    "empty": "لا يوجد {{resource}}"
+  },
+  "items": {
+    "heading": "كل المنتجات",
+    "addNew": "إضافة منتج جديد",
+    "columns": {
+      "item": "المنتج",
+      "name": "الاسم",
+      "price": "السعر",
+      "discount": "الخصم",
+      "category": "الفئة",
+      "stockQty": "كمية المخزون",
+      "available": "متاح"
+    },
+    "form": {
+      "name": "اسم المنتج",
+      "price": "سعر المنتج",
+      "category": "فئة المنتج",
+      "expiryDate": "تاريخ الانتهاء",
+      "description": "الوصف",
+      "stock": "المخزون",
+      "photo": "صورة المنتج",
+      "selectCategory": "اختر الفئة"
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب",
+      "priceMin": "السعر يجب أن يكون 1 على الأقل"
+    },
+    "details": {
+      "title": "منتج #{{id}}",
+      "addedToCart": "تمت إضافة المنتج إلى السلة بنجاح",
+      "notFound": "منتج"
+    },
+    "dataBox": {
+      "header": "منتج #{{id}}",
+      "expires": "ينتهي في:",
+      "priceLabel": "السعر",
+      "itemPrice": "سعر المنتج",
+      "created": "تاريخ الإنشاء {{date}}"
+    },
+    "filter": {
+      "all": "الكل",
+      "food": "طعام",
+      "beverages": "مشروبات",
+      "others": "أخرى"
+    },
+    "sort": {
+      "dateDesc": "ترتيب بالتاريخ (الأحدث أولاً)",
+      "dateAsc": "ترتيب بالتاريخ (الأقدم أولاً)",
+      "stockDesc": "ترتيب بالمخزون (الأعلى أولاً)",
+      "stockAsc": "ترتيب بالمخزون (الأقل أولاً)"
+    },
+    "exportCsv": "تصدير CSV",
+    "importCsv": "استيراد CSV"
+  },
+  "pagination": {
+    "showing": "عرض {{from}} إلى {{to}} من {{total}} نتيجة",
+    "previous": "السابق",
+    "next": "التالي"
+  },
+  "orders": {
+    "heading": "كل الطلبات",
+    "filter": {
+      "all": "الكل",
+      "completed": "مكتمل",
+      "pending": "قيد الانتظار",
+      "cancelled": "ملغي",
+      "expired": "منتهي"
+    },
+    "sort": {
+      "dateDesc": "ترتيب بالتاريخ (الأحدث أولاً)",
+      "dateAsc": "ترتيب بالتاريخ (الأقدم أولاً)",
+      "amountDesc": "ترتيب بالمبلغ (الأعلى أولاً)",
+      "amountAsc": "ترتيب بالمبلغ (الأقل أولاً)"
+    },
+    "columns": {
+      "orderId": "رقم الطلب",
+      "cashier": "الكاشير",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "amount": "المبلغ",
+      "qty": "الكمية"
+    },
+    "details": {
+      "title": "حجز #{{id}}",
+      "notFound": "طلب"
+    },
+    "dataBox": {
+      "header": "طلب #{{id}}",
+      "itemDetails": "تفاصيل المنتجات",
+      "quantity": "الكمية: {{count}}",
+      "waiter": "الويتر:",
+      "cashier": "الكاشير:",
+      "totalAmount": "المبلغ الإجمالي",
+      "orderTotal": "إجمالي الطلب",
+      "ordered": "تاريخ الطلب {{date}}",
+      "today": "اليوم"
+    },
+    "complete": "إكمال",
+    "cancelOrder": "إلغاء الطلب"
+  },
+  "employees": {
+    "heading": "إنشاء مستخدم جديد",
+    "form": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "password": "كلمة المرور (8 أحرف على الأقل)",
+      "selectRole": "اختر الدور",
+      "createUser": "إنشاء مستخدم جديد"
+    },
+    "roles": {
+      "super_admin": "مدير النظام",
+      "manager": "مدير",
+      "cashier": "كاشير",
+      "waiter": "ويتر"
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب",
+      "nameMin": "الاسم يجب أن يكون 10 أحرف على الأقل",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+      "passwordMin": "كلمة المرور يجب أن تكون 8 أحرف على الأقل"
+    }
+  },
+  "account": {
+    "heading": "تحديث حسابك",
+    "updateUserData": "تحديث بيانات المستخدم",
+    "updatePassword": "تحديث كلمة المرور",
+    "form": {
+      "email": "البريد الإلكتروني",
+      "fullName": "الاسم الكامل",
+      "image": "الصورة",
+      "currentPassword": "كلمة المرور الحالية",
+      "newPassword": "كلمة المرور الجديدة (8 أحرف على الأقل)",
+      "updateAccount": "تحديث الحساب",
+      "updatePasswordBtn": "تحديث كلمة المرور"
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب",
+      "passwordMin": "كلمة المرور يجب أن تكون 8 أحرف على الأقل"
+    }
+  },
+  "cart": {
+    "heading": "السلة",
+    "empty": "السلة فارغة",
+    "total": "الإجمالي: {{amount}}",
+    "customerName": "اسم العميل",
+    "customerPlaceholder": "أدخل اسم العميل",
+    "customerRequired": "يرجى إدخال اسم العميل",
+    "confirmOrder": "تأكيد الطلب",
+    "creatingOrder": "جاري إنشاء الطلب...",
+    "itemLine": "{{qty}} × {{name}} - {{total}}"
+  },
+  "integrations": {
+    "heading": "الأتمتة والتكاملات",
+    "google": {
+      "title": "حساب Google",
+      "checking": "جاري التحقق...",
+      "connected": "متصل",
+      "notConnected": "غير متصل",
+      "connect": "ربط Google",
+      "active": "✓ نشط",
+      "description": "ربط حساب Google يفعّل تذكيرات التقويم للمنتجات المنتهية ورفع التقارير اليومية تلقائياً إلى Google Drive."
+    },
+    "badgeAutoDaily": "تلقائي • يعمل يومياً",
+    "features": {
+      "expiryNotifications": {
+        "title": "إشعارات انتهاء الصلاحية",
+        "description": "يرسل تنبيهات بريدية تلقائية للمديرين عند انتهاء منتجات اليوم أو خلال 5 أيام."
+      },
+      "calendarReminders": {
+        "title": "تذكيرات Google Calendar",
+        "description": "يضيف أحداث انتهاء الصلاحية إلى تقويم Google مباشرة حتى لا تفوتك أي موعد مهم."
+      },
+      "autoDiscount": {
+        "title": "خصم تلقائي",
+        "description": "المنتجات التي تنتهي خلال 20 يوماً تحصل تلقائياً على خصم 25% لتقليل الهدر."
+      },
+      "autoExpireOrders": {
+        "title": "إنهاء الطلبات تلقائياً",
+        "description": "الطلبات المعلقة الأقدم من 4 ساعات تُعلَّم تلقائياً كمنتهية."
+      },
+      "dailyReport": {
+        "title": "تقرير يومي إلى Google Drive",
+        "description": "يُنشأ تقرير CSV لطلبات اليوم ويُرفع إلى Google Drive كل منتصف ليل."
+      }
+    }
+  },
+  "reports": {
+    "heading": "تقرير المبيعات",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ النهاية",
+    "waiterName": "اسم الويتر",
+    "waiterPlaceholder": "ابحث عن ويتر...",
+    "apply": "تطبيق",
+    "exportCsv": "تصدير CSV",
+    "exportSuccess": "تم تصدير CSV بنجاح!",
+    "exportError": "فشل تصدير CSV",
+    "empty": "لا توجد بيانات للفترة المحددة.",
+    "unknown": "غير معروف",
+    "stats": {
+      "totalRevenue": "إجمالي الإيرادات",
+      "totalItemsSold": "إجمالي القطع المباعة",
+      "totalCommission": "إجمالي العمولة",
+      "waiters": "الويترات"
+    },
+    "chart": {
+      "title": "الإيرادات والعمولة لكل ويتر",
+      "revenue": "الإيرادات",
+      "commission": "العمولة"
+    },
+    "table": {
+      "title": "تفصيل الويترات",
+      "waiter": "الويتر",
+      "itemsSold": "القطع المباعة",
+      "revenue": "الإيرادات",
+      "commission": "العمولة",
+      "food": "طعام",
+      "beverages": "مشروبات",
+      "others": "أخرى"
+    },
+    "currency": "{{amount}} جنيه"
+  },
+  "dashboard": {
+    "heading": "لوحة التحكم",
+    "filter": {
+      "last7": "آخر 7 أيام",
+      "last30": "آخر 30 يوماً",
+      "last90": "آخر 90 يوماً"
+    },
+    "stats": {
+      "orders": "الطلبات",
+      "sales": "المبيعات",
+      "customers": "عدد العملاء",
+      "avgOrderValue": "متوسط قيمة الطلب"
+    },
+    "today": {
+      "title": "اليوم",
+      "noActivity": "لا يوجد نشاط اليوم..",
+      "tag": "اليوم",
+      "orderNumber": "طلب رقم {{id}}",
+      "complete": "إكمال"
+    },
+    "salesChart": {
+      "noData": "لا توجد بيانات مبيعات",
+      "title": "المبيعات من {{from}} — {{to}}",
+      "completedSales": "مبيعات مكتملة",
+      "pendingSales": "مبيعات معلقة",
+      "extrasSales": "مبيعات إضافية"
+    },
+    "charts": {
+      "noData": "لا توجد بيانات",
+      "byValueRange": "الطلبات حسب نطاق القيمة",
+      "byStatus": "الطلبات حسب الحالة",
+      "valueRange": {
+        "low": "منخفض ($0-50)",
+        "medium": "متوسط ($51-100)",
+        "high": "مرتفع ($101-200)",
+        "premium": "مميز ($201+)"
+      }
+    }
+  }
+}

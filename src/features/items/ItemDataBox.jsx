@@ -3,11 +3,11 @@ import { format } from "date-fns";
 import {
   HiOutlineCurrencyDollar,
   HiOutlineClipboardDocumentList,
-  HiOutlineClock,
 } from "react-icons/hi2";
 
 import DataItem from "../../ui/DataItem";
 import { formatCurrency } from "../../utils/helpers";
+import { useTranslation } from "react-i18next";
 
 const StyledOrderDataBox = styled.section`
   /* Box */
@@ -163,6 +163,7 @@ const Img = styled.img`
 `;
 
 function ItemDataBox({ item }) {
+  const { t } = useTranslation();
   const {
     _id,
     updatedAt,
@@ -178,7 +179,7 @@ function ItemDataBox({ item }) {
       <Header>
         <div>
           <HiOutlineClipboardDocumentList />
-          <p>Item <span>#{_id.slice(-6)}</span></p>
+          <p>{t("items.dataBox.header", { id: _id.slice(-6) })}</p>
         </div>
       </Header>
 
@@ -206,26 +207,27 @@ function ItemDataBox({ item }) {
 
             {expiryDate && (
               <div style={{ marginTop: '6rem', color: 'var(--color-grey-600)' }}>
-                <strong>Expires:</strong> {format(new Date(expiryDate), "MMM dd, yyyy")}
+                <strong>{t("items.dataBox.expires")}</strong> {format(new Date(expiryDate), "MMM dd, yyyy")}
               </div>
             )}
           </ItemsList>
 
           <Price>
-            <DataItem icon={<HiOutlineCurrencyDollar />} label="Price">
+            <DataItem icon={<HiOutlineCurrencyDollar />} label={t("items.dataBox.priceLabel")}>
               {formatCurrency ? formatCurrency(price) : `$${price}`}
             </DataItem>
-            <p>Item Price</p>
+            <p>{t("items.dataBox.itemPrice")}</p>
           </Price>
         </ContentContainer>
       </Section>
 
       <Footer>
         <p>
-          <HiOutlineClock style={{ display: 'inline', marginRight: '0.5rem' }} />
-          Created {updatedAt && !isNaN(new Date(updatedAt))
-            ? format(new Date(updatedAt), "EEE, MMM dd yyyy, p")
-            : '—'}
+          {t("items.dataBox.created", {
+            date: updatedAt && !isNaN(new Date(updatedAt))
+              ? format(new Date(updatedAt), "EEE, MMM dd yyyy, p")
+              : "—",
+          })}
         </p>
       </Footer>
     </StyledOrderDataBox>

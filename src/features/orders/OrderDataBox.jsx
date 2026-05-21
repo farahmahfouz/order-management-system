@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
+import { useTranslation } from "react-i18next";
 import {
   HiOutlineCurrencyDollar,
   HiOutlineClipboardDocumentList,
@@ -11,7 +12,6 @@ import DataItem from "../../ui/DataItem";
 import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
 
 const StyledOrderDataBox = styled.section`
-  /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
@@ -44,7 +44,7 @@ const Header = styled.header`
   & span {
     font-family: "Sono";
     font-size: 2rem;
-    margin-left: 4px;
+    margin-inline-start: 4px;
   }
 `;
 
@@ -69,8 +69,8 @@ const Staff = styled.div`
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
-  justify-content: flex-end; 
-  
+  justify-content: flex-end;
+
   & > div {
     display: flex;
     align-items: flex-end;
@@ -81,7 +81,7 @@ const Staff = styled.div`
 
 const ItemsList = styled.div`
   margin-bottom: 2rem;
-  
+
   & h4 {
     margin-bottom: 1rem;
     color: var(--color-grey-700);
@@ -95,38 +95,33 @@ const ItemRow = styled.div`
   align-items: center;
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--color-grey-100);
-  
+
   &:last-child {
     border-bottom: none;
   }
-  
+
   & .item-info {
     display: flex;
     gap: 1rem;
     align-items: center;
   }
-  
+
   & .item-name {
     font-weight: 500;
     color: var(--color-grey-700);
   }
-  
+
   & .item-price {
     color: var(--color-grey-500);
     font-size: 1.4rem;
   }
-  
+
   & .quantity {
     background-color: var(--color-grey-100);
     padding: 0.2rem 0.8rem;
     border-radius: var(--border-radius-sm);
     font-size: 1.2rem;
     font-weight: 600;
-  }
-  
-  & .total {
-    font-weight: 600;
-    color: var(--color-grey-700);
   }
 `;
 
@@ -153,16 +148,15 @@ const Price = styled.div`
   }
 `;
 
-
-
 const Footer = styled.footer`
   padding: 1.6rem 4rem;
   font-size: 1.2rem;
   color: var(--color-grey-500);
-  text-align: right;
+  text-align: end;
 `;
 
 function OrderDataBox({ order }) {
+  const { t } = useTranslation();
   const {
     _id,
     createdAt,
@@ -172,35 +166,38 @@ function OrderDataBox({ order }) {
     waiter,
     cashier,
   } = order;
-  console.log(items)
+
+  const formattedDate = format(new Date(createdAt), "EEE, MMM dd yyyy, p");
+  const timeAgo = isToday(new Date(createdAt))
+    ? t("orders.dataBox.today")
+    : formatDistanceFromNow
+      ? formatDistanceFromNow(createdAt)
+      : format(new Date(createdAt), "MMM dd");
 
   return (
     <StyledOrderDataBox>
       <Header>
         <div>
           <HiOutlineClipboardDocumentList />
-          <p>
-            Order <span>#{_id.slice(-6)}</span>
-          </p>
+          <p>{t("orders.dataBox.header", { id: _id.slice(-6) })}</p>
         </div>
-
-        {/* <StatusBadge status={status}>{status}</StatusBadge> */}
       </Header>
 
       <Section>
         <ItemsList>
-          <h4>Item Details: </h4>
+          <h4>{t("orders.dataBox.itemDetails")}</h4>
           {items.map((orderItem) => (
             <ItemRow key={orderItem._id}>
               <div className="item-info">
                 <span className="item-name">{orderItem.item?.name}</span>
                 <span className="item-price">
-                  {formatCurrency ? formatCurrency(orderItem.item?.price) : `$${orderItem.item?.price}`}
+                  {formatCurrency(orderItem.item?.price)}
                 </span>
               </div>
               <div className="item-info">
-                <span className="quantity">Quantity: {orderItem.quantity}</span>
-
+                <span className="quantity">
+                  {t("orders.dataBox.quantity", { count: orderItem.quantity })}
+                </span>
               </div>
             </ItemRow>
           ))}
@@ -208,37 +205,32 @@ function OrderDataBox({ order }) {
 
         <Customer>
           <HiOutlineUser />
-          <p>{customerName || '-'}</p>
+          <p>{customerName || "-"}</p>
         </Customer>
 
         <Staff>
           {waiter && (
             <div>
-              <strong>Waiter:</strong> {waiter?.name}
+              <strong>{t("orders.dataBox.waiter")}</strong> {waiter?.name}
             </div>
           )}
           <div>
-            <strong>Cashier:</strong> {cashier?.name}
+            <strong>{t("orders.dataBox.cashier")}</strong> {cashier?.name}
           </div>
         </Staff>
 
         <Price>
-          <DataItem icon={<HiOutlineCurrencyDollar />} label="Total Amount">
-            {formatCurrency ? formatCurrency(totalCost) : `$${totalCost}`}
+          <DataItem icon={<HiOutlineCurrencyDollar />} label={t("orders.dataBox.totalAmount")}>
+            {formatCurrency(totalCost)}
           </DataItem>
-          <p>Order Total</p>
+          <p>{t("orders.dataBox.orderTotal")}</p>
         </Price>
       </Section>
 
       <Footer>
         <p>
-          <HiOutlineClock style={{ display: 'inline', marginRight: '0.5rem' }} />
-          Ordered {format(new Date(createdAt), "EEE, MMM dd yyyy, p")}
-          {' '}
-          ({isToday(new Date(createdAt))
-            ? "Today"
-            : formatDistanceFromNow ? formatDistanceFromNow(createdAt) : format(new Date(createdAt), "MMM dd")
-          })
+          <HiOutlineClock style={{ display: "inline", marginInlineEnd: "0.5rem" }} />
+          {t("orders.dataBox.ordered", { date: formattedDate })} ({timeAgo})
         </p>
       </Footer>
     </StyledOrderDataBox>

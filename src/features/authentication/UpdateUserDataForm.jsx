@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
@@ -10,6 +11,7 @@ import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
 
 function UpdateUserDataForm() {
+  const { t } = useTranslation();
   const { user } = useUser();
 
   const email = user?.email ?? "";
@@ -27,12 +29,15 @@ function UpdateUserDataForm() {
     const formData = new FormData();
     formData.append("name", name);
     if (image) formData.append("image", image);
-    updateUser({ userId, updatedData: formData }, {
-      onSettled: () => {
-        setImage(null);
-        e.target.reset();
+    updateUser(
+      { userId, updatedData: formData },
+      {
+        onSettled: () => {
+          setImage(null);
+          e.target.reset();
+        },
       }
-    })
+    );
   }
 
   function handleCancel() {
@@ -42,10 +47,10 @@ function UpdateUserDataForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRow label="Email address">
+      <FormRow label={t("account.form.email")}>
         <Input value={email} disabled />
       </FormRow>
-      <FormRow label="Full name">
+      <FormRow label={t("account.form.fullName")}>
         <Input
           type="text"
           value={name}
@@ -54,7 +59,7 @@ function UpdateUserDataForm() {
           disabled={isUpdatig}
         />
       </FormRow>
-      <FormRow label="Image">
+      <FormRow label={t("account.form.image")}>
         <FileInput
           id="image"
           accept="image/*"
@@ -63,10 +68,15 @@ function UpdateUserDataForm() {
         />
       </FormRow>
       <FormRow>
-        <Button type="reset" variation="secondary" disabled={isUpdatig} onClick={handleCancel}>
-          Cancel
+        <Button
+          type="reset"
+          variation="secondary"
+          disabled={isUpdatig}
+          onClick={handleCancel}
+        >
+          {t("common.cancel")}
         </Button>
-        <Button disabled={isUpdatig}>Update account</Button>
+        <Button disabled={isUpdatig}>{t("account.form.updateAccount")}</Button>
       </FormRow>
     </Form>
   );

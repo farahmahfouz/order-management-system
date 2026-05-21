@@ -36,7 +36,7 @@ const Button = styled.button`
   transform: translateX(0.8rem);
   transition: all 0.2s;
   position: absolute;
-  top: 1.2rem;
+  top: 0.6rem;
   right: 1.9rem;
 
   &:hover {

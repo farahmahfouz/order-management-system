@@ -21,6 +21,7 @@ import CreateItemForm from "./CreateItemForm";
 import toast from "react-hot-toast";
 import { useCart } from "../../context/CartContext";
 import { usePermissions } from "../authentication/usePermissions";
+import { useTranslation } from "react-i18next";
 
 const Img = styled.img`
   display: block;
@@ -89,6 +90,7 @@ function ItemRow({ item }) {
   const { isDeleteing, deleteItem } = useDeleteItem();
   const { addToCart } = useCart();
   const { permissions } = usePermissions();
+  const { t } = useTranslation();
 
   const isExpired = new Date(expiryDate) < new Date();
 
@@ -120,26 +122,26 @@ function ItemRow({ item }) {
             <Menus.Button
               icon={<HiEye />}
               onClick={() => navigate(`/items/${itemId}`)}>
-              See Details
+              {t('common.seeDetails')}
             </Menus.Button>
 
             {isAvailable === true && !isExpired &&
-                <Menus.Button
-                  icon={<HiOutlineShoppingCart />}
-                  onClick={handleAddToCart}
-                >
-                  Add to cart
-                </Menus.Button>
+              <Menus.Button
+                icon={<HiOutlineShoppingCart />}
+                onClick={handleAddToCart}
+              >
+                {t('common.addToCart')}
+              </Menus.Button>
             }
 
             {permissions.itemsWrite && (
               <>
                 <Modal.Open opens='edit'>
-                  <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+                  <Menus.Button icon={<HiPencil />}>{t('common.edit')}</Menus.Button>
                 </Modal.Open>
 
                 <Modal.Open opens='delete'>
-                  <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+                  <Menus.Button icon={<HiTrash />}>{t('common.delete')}</Menus.Button>
                 </Modal.Open>
               </>
             )}

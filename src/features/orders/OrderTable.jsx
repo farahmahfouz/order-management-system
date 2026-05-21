@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import OrderRow from "./OrderRow";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
@@ -8,21 +9,22 @@ import Spinner from "../../ui/Spinner";
 import Pagination from "../../ui/Pagination";
 
 function OrderTable() {
+  const { t } = useTranslation();
   const { orders, isPending, count, limit, page } = useOrders();
 
-  if (isPending || !orders?.length) return <Spinner />;
-  if (!orders?.length) return <Empty resourceName="orders" />;
+  if (isPending) return <Spinner />;
+  if (!orders?.length) return <Empty resourceName={t("nav.orders")} />;
 
   return (
     <Menus>
       <Table columns="1fr 1.8fr 1.2fr 1.2fr 1fr 0.8fr 0.6fr">
         <Table.Header>
-          <div>Order ID</div>
-          <div>Cashier</div>
-          <div>Date</div>
-          <div>Status</div>
-          <div>Amount</div>
-          <div>Qty</div>
+          <div>{t("orders.columns.orderId")}</div>
+          <div>{t("orders.columns.cashier")}</div>
+          <div>{t("orders.columns.date")}</div>
+          <div>{t("orders.columns.status")}</div>
+          <div>{t("orders.columns.amount")}</div>
+          <div>{t("orders.columns.qty")}</div>
           <div></div>
         </Table.Header>
 

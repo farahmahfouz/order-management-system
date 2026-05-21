@@ -1,7 +1,13 @@
-// src/features/integrations/IntegrationsFeatures.jsx
 import styled from "styled-components";
-import { HiOutlineCalendar, HiOutlineFolder, HiOutlineBell, HiOutlineClock, HiOutlineTag } from "react-icons/hi2";
+import {
+  HiOutlineCalendar,
+  HiOutlineFolder,
+  HiOutlineBell,
+  HiOutlineClock,
+  HiOutlineTag,
+} from "react-icons/hi2";
 import { FcGoogle } from "react-icons/fc";
+import { useTranslation } from "react-i18next";
 import Button from "../../ui/Button";
 import { useGoogleStatus } from "./useGoogleStatus";
 import { connectGoogle } from "../../services/apiGoogle";
@@ -75,7 +81,10 @@ const GoogleInfo = styled.div`
   align-items: center;
   gap: 1.2rem;
 
-  & svg { width: 3.2rem; height: 3.2rem; }
+  & svg {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
 `;
 
 const StatusDot = styled.span`
@@ -83,41 +92,22 @@ const StatusDot = styled.span`
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-  background-color: ${({ connected }) => connected ? 'var(--color-green-700)' : 'var(--color-grey-400)'};
-  margin-right: 0.6rem;
+  background-color: ${({ connected }) =>
+    connected ? "var(--color-green-700)" : "var(--color-grey-400)"};
+  margin-inline-end: 0.6rem;
 `;
 
-const features = [
-  {
-    icon: <HiOutlineBell />,
-    title: "Expiry Notifications",
-    description: "Automatically sends email alerts to admins when items are expiring today or within 5 days.",
-  },
-  {
-    icon: <HiOutlineCalendar />,
-    title: "Google Calendar Reminders",
-    description: "Adds expiry events directly to your Google Calendar so you never miss a critical date.",
-  },
-  {
-    icon: <HiOutlineTag />,
-    title: "Auto Discount",
-    description: "Items expiring within 20 days automatically get a 25% discount applied to reduce waste.",
-  },
-  {
-    icon: <HiOutlineClock />,
-    title: "Auto Expire Orders",
-    description: "Pending orders older than 4 hours are automatically marked as expired.",
-  },
-  {
-    icon: <HiOutlineFolder />,
-    title: "Daily Report to Google Drive",
-    description: "A CSV report of today's orders is generated and uploaded to your Google Drive every midnight.",
-  },
+const FEATURE_KEYS = [
+  { key: "expiryNotifications", icon: <HiOutlineBell /> },
+  { key: "calendarReminders", icon: <HiOutlineCalendar /> },
+  { key: "autoDiscount", icon: <HiOutlineTag /> },
+  { key: "autoExpireOrders", icon: <HiOutlineClock /> },
+  { key: "dailyReport", icon: <HiOutlineFolder /> },
 ];
 
 function IntegrationsFeatures() {
+  const { t } = useTranslation();
   const { isConnected, isPending } = useGoogleStatus();
-  console.log(isConnected)
 
   return (
     <Grid>
@@ -126,42 +116,44 @@ function IntegrationsFeatures() {
           <GoogleInfo>
             <FcGoogle />
             <div>
-              <CardTitle>Google Account</CardTitle>
+              <CardTitle>{t("integrations.google.title")}</CardTitle>
               <CardDescription style={{ marginTop: "0.4rem" }}>
                 <StatusDot connected={isConnected} />
-                {isPending ? "Checking..." : isConnected ? "Connected" : "Not connected"}
+                {isPending
+                  ? t("integrations.google.checking")
+                  : isConnected
+                    ? t("integrations.google.connected")
+                    : t("integrations.google.notConnected")}
               </CardDescription>
             </div>
           </GoogleInfo>
 
           {!isPending && !isConnected && (
             <Button onClick={connectGoogle}>
-              Connect Google
+              {t("integrations.google.connect")}
             </Button>
           )}
 
           {!isPending && isConnected && (
-            <Badge>✓ Active</Badge>
+            <Badge>{t("integrations.google.active")}</Badge>
           )}
 
           {isPending && <SpinnerMini />}
         </GoogleHeader>
 
-        <CardDescription>
-          Connecting your Google account enables Calendar reminders for expiring items
-          and automatic daily report uploads to Google Drive.
-        </CardDescription>
+        <CardDescription>{t("integrations.google.description")}</CardDescription>
       </GoogleCard>
 
-      {/* Automation Feature Cards */}
-      {features.map((feature) => (
-        <Card key={feature.title}>
+      {FEATURE_KEYS.map(({ key, icon }) => (
+        <Card key={key}>
           <CardHeader>
-            {feature.icon}
-            <CardTitle>{feature.title}</CardTitle>
+            {icon}
+            <CardTitle>{t(`integrations.features.${key}.title`)}</CardTitle>
           </CardHeader>
-          <CardDescription>{feature.description}</CardDescription>
-          <Badge>Auto • Runs Daily</Badge>
+          <CardDescription>
+            {t(`integrations.features.${key}.description`)}
+          </CardDescription>
+          <Badge>{t("integrations.badgeAutoDaily")}</Badge>
         </Card>
       ))}
     </Grid>

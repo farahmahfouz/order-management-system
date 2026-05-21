@@ -22,6 +22,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/Cart";
 import Integrations from "./pages/Integrations";
 import Reports from "./pages/Reports";
+import LanguageProvider from "./context/LanguageContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,88 +34,90 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <DarkModeProvider>
-      <CartProvider>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <GlobalStyles />
-          <BrowserRouter>
-            <Routes>
-              <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
-                <Route index element={<Navigate replace to='dashboard' />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="items" element={<Items />} />
-                <Route path="items/:itemId" element={<Item />} />
-                <Route
-                  path="orders"
-                  element={
-                    <PermissionRoute permission="orders">
-                      <Orders />
-                    </PermissionRoute>
-                  }
-                />
-                <Route
-                  path="orders/:orderId"
-                  element={
-                    <PermissionRoute permission="orders">
-                      <Order />
-                    </PermissionRoute>
-                  }
-                />
-                <Route
-                  path="employees"
-                  element={
-                    <PermissionRoute permission="users">
-                      <Employees />
-                    </PermissionRoute>
-                  }
-                />
-                <Route path="account" element={<Account />} />
-                <Route
-                  path="integrations"
-                  element={
-                    <PermissionRoute permission="google">
-                      <Integrations />
-                    </PermissionRoute>
-                  }
-                />
-                <Route
-                  path="reports"
-                  element={
-                    <PermissionRoute permission="reports">
-                      <Reports />
-                    </PermissionRoute>
-                  }
-                />
-                <Route path="cart" element={<Cart />} />
-              </Route>
-              <Route path="login" element={<Login />} />
-              <Route path='forgotPassword' element={<ForgotPassword />} />
-              <Route path="reset-password/:token" element={<ResetPassword />} />
-            </Routes>
-          </BrowserRouter>
-          <Toaster
-            position="top-center"
-            gutter={12}
-            containerStyle={{ margin: '8px' }}
-            toastOptions={{
-              success: {
-                duration: 3000
-              },
-              error: {
-                duration: 5000
-              },
-              style: {
-                fontSize: '16px',
-                maxWidth: '500px',
-                padding: '16px 24px',
-                backgroundColor: 'var(--color-grey-0)',
-                color: 'var(--color-grey-700)'
-              }
-            }} />
-        </QueryClientProvider>
-      </CartProvider>
-    </DarkModeProvider>
+    <LanguageProvider>
+      <DarkModeProvider>
+        <CartProvider>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <GlobalStyles />
+            <BrowserRouter>
+              <Routes>
+                <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+                  <Route index element={<Navigate replace to='dashboard' />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="items" element={<Items />} />
+                  <Route path="items/:itemId" element={<Item />} />
+                  <Route
+                    path="orders"
+                    element={
+                      <PermissionRoute permission="orders">
+                        <Orders />
+                      </PermissionRoute>
+                    }
+                  />
+                  <Route
+                    path="orders/:orderId"
+                    element={
+                      <PermissionRoute permission="orders">
+                        <Order />
+                      </PermissionRoute>
+                    }
+                  />
+                  <Route
+                    path="employees"
+                    element={
+                      <PermissionRoute permission="users">
+                        <Employees />
+                      </PermissionRoute>
+                    }
+                  />
+                  <Route path="account" element={<Account />} />
+                  <Route
+                    path="integrations"
+                    element={
+                      <PermissionRoute permission="google">
+                        <Integrations />
+                      </PermissionRoute>
+                    }
+                  />
+                  <Route
+                    path="reports"
+                    element={
+                      <PermissionRoute permission="reports">
+                        <Reports />
+                      </PermissionRoute>
+                    }
+                  />
+                  <Route path="cart" element={<Cart />} />
+                </Route>
+                <Route path="login" element={<Login />} />
+                <Route path='forgotPassword' element={<ForgotPassword />} />
+                <Route path="reset-password/:token" element={<ResetPassword />} />
+              </Routes>
+            </BrowserRouter>
+            <Toaster
+              position="top-center"
+              gutter={12}
+              containerStyle={{ margin: '8px' }}
+              toastOptions={{
+                success: {
+                  duration: 3000
+                },
+                error: {
+                  duration: 5000
+                },
+                style: {
+                  fontSize: '16px',
+                  maxWidth: '500px',
+                  padding: '16px 24px',
+                  backgroundColor: 'var(--color-grey-0)',
+                  color: 'var(--color-grey-700)'
+                }
+              }} />
+          </QueryClientProvider>
+        </CartProvider>
+      </DarkModeProvider>
+    </LanguageProvider>
   )
 }
 

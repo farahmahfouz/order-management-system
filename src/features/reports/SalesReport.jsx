@@ -1,10 +1,16 @@
-// src/features/reports/SalesReport.jsx
 import { useState } from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, Legend,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
 } from "recharts";
 import { HiOutlineArrowDownTray, HiOutlineFunnel } from "react-icons/hi2";
 
@@ -105,7 +111,7 @@ const Table = styled.table`
   & th {
     background-color: var(--color-grey-50);
     padding: 1.2rem 2rem;
-    text-align: left;
+    text-align: start;
     font-weight: 600;
     color: var(--color-grey-600);
     border-bottom: 1px solid var(--color-grey-100);
@@ -117,8 +123,12 @@ const Table = styled.table`
     border-bottom: 1px solid var(--color-grey-100);
   }
 
-  & tr:last-child td { border-bottom: none; }
-  & tr:hover td { background-color: var(--color-grey-50); }
+  & tr:last-child td {
+    border-bottom: none;
+  }
+  & tr:hover td {
+    background-color: var(--color-grey-50);
+  }
 `;
 
 const ChartCard = styled.div`
@@ -143,6 +153,7 @@ const EmptyState = styled.div`
 `;
 
 function SalesReport() {
+  const { t } = useTranslation();
   const today = format(new Date(), "yyyy-MM-dd");
   const firstOfMonth = format(
     new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -152,7 +163,11 @@ function SalesReport() {
   const [startDate, setStartDate] = useState(firstOfMonth);
   const [endDate, setEndDate] = useState(today);
   const [waiterFilter, setWaiterFilter] = useState("");
-  const [applied, setApplied] = useState({ startDate: firstOfMonth, endDate: today, waiter: "" });
+  const [applied, setApplied] = useState({
+    startDate: firstOfMonth,
+    endDate: today,
+    waiter: "",
+  });
 
   const { data, isPending } = useSalesReport({
     startDate: applied.startDate,
@@ -161,16 +176,20 @@ function SalesReport() {
     enabled: true,
   });
 
-  const totalRevenue = data?.reduce((sum, r) => sum + parseFloat(r.revenue), 0).toFixed(2) || "0.00";
+  const totalRevenue =
+    data?.reduce((sum, r) => sum + parseFloat(r.revenue), 0).toFixed(2) || "0.00";
   const totalItems = data?.reduce((sum, r) => sum + r.totalItemsSold, 0) || 0;
-  const totalCommission = data?.reduce((sum, r) => sum + parseFloat(r.totalCommission), 0).toFixed(2) || "0.00";
+  const totalCommission =
+    data?.reduce((sum, r) => sum + parseFloat(r.totalCommission), 0).toFixed(2) ||
+    "0.00";
 
-  const chartData = data?.map((r) => ({
-    name: r.waiter || "Unknown",
-    Revenue: parseFloat(r.revenue),
-    Commission: parseFloat(r.totalCommission),
-    Items: r.totalItemsSold,
-  })) || [];
+  const chartData =
+    data?.map((r) => ({
+      name: r.waiter || t("reports.unknown"),
+      Revenue: parseFloat(r.revenue),
+      Commission: parseFloat(r.totalCommission),
+      Items: r.totalItemsSold,
+    })) || [];
 
   async function handleExport() {
     try {
@@ -179,76 +198,83 @@ function SalesReport() {
         endDate: applied.endDate,
         waiter: applied.waiter,
       });
-      toast.success("CSV exported successfully!");
+      toast.success(t("reports.exportSuccess"));
     } catch {
-      toast.error("Failed to export CSV");
+      toast.error(t("reports.exportError"));
     }
   }
 
   return (
     <Section>
-      {/* Filter Bar */}
       <FilterBar>
         <FilterGroup>
-          <label>Start Date</label>
-          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+          <label>{t("reports.startDate")}</label>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
         </FilterGroup>
 
         <FilterGroup>
-          <label>End Date</label>
-          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+          <label>{t("reports.endDate")}</label>
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
         </FilterGroup>
 
         <FilterGroup>
-          <label>Waiter Name</label>
+          <label>{t("reports.waiterName")}</label>
           <input
             type="text"
-            placeholder="Search waiter..."
+            placeholder={t("reports.waiterPlaceholder")}
             value={waiterFilter}
             onChange={(e) => setWaiterFilter(e.target.value)}
           />
         </FilterGroup>
 
         <Button
-          onClick={() => setApplied({ startDate, endDate, waiter: waiterFilter })}
+          onClick={() =>
+            setApplied({ startDate, endDate, waiter: waiterFilter })
+          }
         >
-          <HiOutlineFunnel /> Apply
+          <HiOutlineFunnel /> {t("reports.apply")}
         </Button>
 
         <Button variation="secondary" onClick={handleExport}>
-          <HiOutlineArrowDownTray /> Export CSV
+          <HiOutlineArrowDownTray /> {t("reports.exportCsv")}
         </Button>
       </FilterBar>
 
       {isPending ? (
         <Spinner />
       ) : !data?.length ? (
-        <EmptyState>No data found for the selected period.</EmptyState>
+        <EmptyState>{t("reports.empty")}</EmptyState>
       ) : (
         <>
-          {/* Stats */}
           <StatsGrid>
             <StatCard>
-              <h4>Total Revenue</h4>
-              <p>EGP {totalRevenue}</p>
+              <h4>{t("reports.stats.totalRevenue")}</h4>
+              <p>{t("reports.currency", { amount: totalRevenue })}</p>
             </StatCard>
             <StatCard>
-              <h4>Total Items Sold</h4>
+              <h4>{t("reports.stats.totalItemsSold")}</h4>
               <p>{totalItems}</p>
             </StatCard>
             <StatCard>
-              <h4>Total Commission</h4>
-              <p>EGP {totalCommission}</p>
+              <h4>{t("reports.stats.totalCommission")}</h4>
+              <p>{t("reports.currency", { amount: totalCommission })}</p>
             </StatCard>
             <StatCard>
-              <h4>Waiters</h4>
+              <h4>{t("reports.stats.waiters")}</h4>
               <p>{data.length}</p>
             </StatCard>
           </StatsGrid>
 
-          {/* Chart */}
           <ChartCard>
-            <h3>Revenue & Commission per Waiter</h3>
+            <h3>{t("reports.chart.title")}</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -256,25 +282,34 @@ function SalesReport() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="Revenue" fill="var(--color-brand-600)" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Commission" fill="var(--color-green-700)" radius={[4, 4, 0, 0]} />
+                <Bar
+                  dataKey="Revenue"
+                  name={t("reports.chart.revenue")}
+                  fill="var(--color-brand-600)"
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar
+                  dataKey="Commission"
+                  name={t("reports.chart.commission")}
+                  fill="var(--color-green-700)"
+                  radius={[4, 4, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
 
-          {/* Table */}
           <TableCard>
-            <TableTitle>Waiter Breakdown</TableTitle>
+            <TableTitle>{t("reports.table.title")}</TableTitle>
             <Table>
               <thead>
                 <tr>
-                  <th>Waiter</th>
-                  <th>Items Sold</th>
-                  <th>Revenue</th>
-                  <th>Commission</th>
-                  <th>Food</th>
-                  <th>Beverages</th>
-                  <th>Others</th>
+                  <th>{t("reports.table.waiter")}</th>
+                  <th>{t("reports.table.itemsSold")}</th>
+                  <th>{t("reports.table.revenue")}</th>
+                  <th>{t("reports.table.commission")}</th>
+                  <th>{t("reports.table.food")}</th>
+                  <th>{t("reports.table.beverages")}</th>
+                  <th>{t("reports.table.others")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -282,8 +317,10 @@ function SalesReport() {
                   <tr key={i}>
                     <td>{row.waiter || "—"}</td>
                     <td>{row.totalItemsSold}</td>
-                    <td>EGP {row.revenue}</td>
-                    <td>EGP {row.totalCommission}</td>
+                    <td>{t("reports.currency", { amount: row.revenue })}</td>
+                    <td>
+                      {t("reports.currency", { amount: row.totalCommission })}
+                    </td>
                     <td>{row.categoryBreakdown?.food || 0}</td>
                     <td>{row.categoryBreakdown?.beverages || 0}</td>
                     <td>{row.categoryBreakdown?.others || 0}</td>

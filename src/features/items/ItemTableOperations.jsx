@@ -9,6 +9,7 @@ import { handleDownload, handleUpload } from "../../services/apiItems";
 
 import { HiOutlineFolderDownload } from "react-icons/hi";
 import { MdUpload } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 
 const TooltipWrapper = styled.div`
@@ -39,30 +40,25 @@ const TooltipText = styled.div`
 `;
 
 function ItemTableOperations() {
+    const { t } = useTranslation();
     return (
         <TableOperations>
             <Filter
                 filterField="category"
                 options={[
-                    { value: "all", label: "All" },
-                    { value: "food", label: "Food" },
-                    { value: "beverages", label: "Beverages" },
-                    { value: "others", label: "Others" },
+                    { value: "all", label: t("items.filter.all") },
+                    { value: "food", label: t("items.filter.food") },
+                    { value: "beverages", label: t("items.filter.beverages") },
+                    { value: "others", label: t("items.filter.others") },
                 ]}
             />
 
             <SortBy
                 options={[
-                    { value: "-createdAt", label: "Sort by date (recent first)" },
-                    { value: "createdAt", label: "Sort by date (earlier first)" },
-                    {
-                        value: "-stockQuantity",
-                        label: "Sort by total stock (high first)",
-                    },
-                    {
-                        value: "stockQuantity",
-                        label: "Sort by total stock (low first)",
-                    },
+                    { value: "-createdAt", label: t("items.sort.dateDesc") },
+                    { value: "createdAt", label: t("items.sort.dateAsc") },
+                    { value: "-stockQuantity", label: t("items.sort.stockDesc") },
+                    { value: "stockQuantity", label: t("items.sort.stockAsc") },
                 ]}
             />
 
@@ -71,7 +67,7 @@ function ItemTableOperations() {
                     <Button variation="secondary" onClick={handleDownload}>
                         <HiOutlineFolderDownload />
                     </Button>
-                    <TooltipText className="tooltip-text">Export CSV</TooltipText>
+                    <TooltipText className="tooltip-text">{t("items.exportCsv")}</TooltipText>
                 </TooltipWrapper>
 
                 <TooltipWrapper>
@@ -86,7 +82,7 @@ function ItemTableOperations() {
                             />
                         </label>
                     </Button>
-                    <TooltipText className="tooltip-text">Import CSV</TooltipText>
+                    <TooltipText className="tooltip-text"> {t("items.importCsv")}</TooltipText>
                 </TooltipWrapper>
             </ButtonGroup>
 

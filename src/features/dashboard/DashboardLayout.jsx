@@ -17,7 +17,7 @@ const StyledDashboardLayout = styled.div`
 function DashboardLayout() {
   const { orders, isPending: isLoading1 } = useOrders();
 
-  if (isLoading1 ) return <Spinner />;
+  if (isLoading1) return <Spinner />;
 
   return (
     <StyledDashboardLayout>

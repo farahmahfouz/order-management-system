@@ -1,5 +1,8 @@
+import { useTranslation } from "react-i18next";
+
 function Empty({ resourceName }) {
-  return <p>No {resourceName} could be found.</p>;
+  const { t } = useTranslation();
+  return <p>{t("common.empty", { resource: resourceName })}</p>;
 }
 
 export default Empty;

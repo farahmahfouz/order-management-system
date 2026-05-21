@@ -1,18 +1,15 @@
 import styled from "styled-components";
-
+import { useTranslation } from "react-i18next";
 import Heading from "../../ui/Heading";
 import Row from "../../ui/Row";
-
 import Spinner from "../../ui/Spinner";
 import OrderItem from "./OrderItem";
 import { useTodayOrders } from "./useTodayOrders";
 
 const StyledToday = styled.div`
-  /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
-
   padding: 3.2rem;
   display: flex;
   flex-direction: column;
@@ -41,25 +38,28 @@ const NoActivity = styled.p`
 `;
 
 function TodayOrders() {
-  const  { isPending, orders } = useTodayOrders();
+  const { t } = useTranslation();
+  const { isPending, orders } = useTodayOrders();
+
   return (
     <StyledToday>
       <Row type="horizontal">
-        <Heading as="h2">Today</Heading>
+        <Heading as="h2">{t("dashboard.today.title")}</Heading>
       </Row>
 
       {!isPending ? (
         orders?.length > 0 ? (
           <TodayList>
-            {orders.map(order => <OrderItem order={order} key={order._id} />)}
+            {orders.map((order) => (
+              <OrderItem order={order} key={order._id} />
+            ))}
           </TodayList>
         ) : (
-          <NoActivity>No activity today..</NoActivity>
+          <NoActivity>{t("dashboard.today.noActivity")}</NoActivity>
         )
       ) : (
         <Spinner />
       )}
-
     </StyledToday>
   );
 }

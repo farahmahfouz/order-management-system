@@ -4,6 +4,7 @@ import {
     HiEye,
     HiTrash,
 } from "react-icons/hi2";
+import { useTranslation } from "react-i18next";
 
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
@@ -55,15 +56,16 @@ function OrderRow({
         cashier: { name: cashierName, email },
     },
 }) {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { isCancel, cancelOrder } = useCancelOrder();
     const { isComplete, completeOrder } = useCompleteOrder();
 
     const statusToTagName = {
         pending: "blue",
-        "completed": "green",
-        "cancelled": "silver",
-        "expired": "red"
+        completed: "green",
+        cancelled: "silver",
+        expired: "red",
     };
 
     return (
@@ -76,12 +78,12 @@ function OrderRow({
             </Stacked>
             <Stacked>{format(new Date(createdAt), "MMM dd yyyy")}</Stacked>
 
-
-            <Tag type={statusToTagName[status]}>{status}</Tag>
+            <Tag type={statusToTagName[status]}>
+                {t(`orders.filter.${status}`)}
+            </Tag>
             <Amount>{formatCurrency(totalCost)}</Amount>
 
-            <Stacked> {items?.map(item => item.quantity).join(", ")}</Stacked>
-
+            <Stacked>{items?.map((item) => item.quantity).join(", ")}</Stacked>
 
             <Modal>
                 <Menus.Menu>
@@ -91,7 +93,7 @@ function OrderRow({
                             icon={<HiEye />}
                             onClick={() => navigate(`/orders/${orderId}`)}
                         >
-                            See details
+                            {t("common.seeDetails")}
                         </Menus.Button>
 
                         {status === "pending" && (
@@ -100,14 +102,17 @@ function OrderRow({
                                 onClick={() => completeOrder(orderId)}
                                 disabled={isComplete}
                             >
-                                Complete
+                                {t("orders.complete")}
                             </Menus.Button>
                         )}
 
-                        {status === "pending" && <Modal.Open opens="delete">
-                            <Menus.Button icon={<HiTrash />}>Cancel Order</Menus.Button>
-                        </Modal.Open>
-                        }
+                        {status === "pending" && (
+                            <Modal.Open opens="delete">
+                                <Menus.Button icon={<HiTrash />}>
+                                    {t("orders.cancelOrder")}
+                                </Menus.Button>
+                            </Modal.Open>
+                        )}
                     </Menus.List>
                 </Menus.Menu>
 

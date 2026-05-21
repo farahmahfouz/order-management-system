@@ -1,0 +1,291 @@
+{
+  "nav": {
+    "home": "Home",
+    "items": "Items",
+    "orders": "Orders",
+    "employees": "Employees",
+    "integrations": "Integrations",
+    "sales": "Sales"
+  },
+  "common": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "confirm": "Confirm",
+    "back": "Back",
+    "seeDetails": "See details",
+    "clear": "Clear",
+    "search": "Search",
+    "submit": "Submit",
+    "addToCart": "Add To Cart",
+    "deleteTitle": "Delete {{resource}}",
+    "deleteMessage": "Are you sure you want to delete this {{resource}} permanently? This action cannot be undone.",
+    "resources": {
+      "item": "item",
+      "order": "order"
+    },
+    "empty": "No {{resource}} could be found"
+  },
+  "items": {
+    "heading": "All Items",
+    "addNew": "Add new item",
+    "columns": {
+      "item": "Item",
+      "name": "Name",
+      "price": "Price",
+      "discount": "Discount",
+      "category": "Category",
+      "stockQty": "Stock Qty",
+      "available": "Available"
+    },
+    "form": {
+      "name": "Item name",
+      "price": "Item price",
+      "category": "Item category",
+      "expiryDate": "Expiry date",
+      "description": "Description",
+      "stock": "Stock",
+      "photo": "Item photo",
+      "selectCategory": "Select a category"
+    },
+    "validation": {
+      "required": "This field is required",
+      "priceMin": "The price should be at least one"
+    },
+    "details": {
+      "title": "Item #{{id}}",
+      "addedToCart": "Item added to cart successfully",
+      "notFound": "item"
+    },
+    "dataBox": {
+      "header": "Item #{{id}}",
+      "expires": "Expires:",
+      "priceLabel": "Price",
+      "itemPrice": "Item price",
+      "created": "Created {{date}}"
+    },
+    "filter": {
+      "all": "All",
+      "food": "Food",
+      "beverages": "Beverages",
+      "others": "Others"
+    },
+    "sort": {
+      "dateDesc": "Sort by date (recent first)",
+      "dateAsc": "Sort by date (earlier first)",
+      "stockDesc": "Sort by total stock (high first)",
+      "stockAsc": "Sort by total stock (low first)"
+    },
+    "exportCsv": "Export CSV",
+    "importCsv": "Import CSV"
+  },
+  "pagination": {
+    "showing": "Showing {{from}} to {{to}} of {{total}} results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "orders": {
+    "heading": "All Orders",
+    "filter": {
+      "all": "All",
+      "completed": "Completed",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "expired": "Expired"
+    },
+    "sort": {
+      "dateDesc": "Sort by date (recent first)",
+      "dateAsc": "Sort by date (earlier first)",
+      "amountDesc": "Sort by amount (high first)",
+      "amountAsc": "Sort by amount (low first)"
+    },
+    "columns": {
+      "orderId": "Order ID",
+      "cashier": "Cashier",
+      "date": "Date",
+      "status": "Status",
+      "amount": "Amount",
+      "qty": "Qty"
+    },
+    "details": {
+      "title": "Booking #{{id}}",
+      "notFound": "order"
+    },
+    "dataBox": {
+      "header": "Order #{{id}}",
+      "itemDetails": "Item details",
+      "quantity": "Quantity: {{count}}",
+      "waiter": "Waiter:",
+      "cashier": "Cashier:",
+      "totalAmount": "Total amount",
+      "orderTotal": "Order total",
+      "ordered": "Ordered {{date}}",
+      "today": "Today"
+    },
+    "complete": "Complete",
+    "cancelOrder": "Cancel order"
+  },
+  "employees": {
+    "heading": "Create a new user",
+    "form": {
+      "name": "Name",
+      "email": "Email address",
+      "role": "Role",
+      "password": "Password (min 8 characters)",
+      "selectRole": "Select a role",
+      "createUser": "Create new user"
+    },
+    "roles": {
+      "super_admin": "Super Admin",
+      "manager": "Manager",
+      "cashier": "Cashier",
+      "waiter": "Waiter"
+    },
+    "validation": {
+      "required": "This field is required",
+      "nameMin": "Name must be at least 10 characters long",
+      "emailInvalid": "Please provide a valid email address",
+      "passwordMin": "Password needs a minimum of 8 characters"
+    }
+  },
+  "account": {
+    "heading": "Update your account",
+    "updateUserData": "Update user data",
+    "updatePassword": "Update password",
+    "form": {
+      "email": "Email address",
+      "fullName": "Full name",
+      "image": "Image",
+      "currentPassword": "Current password",
+      "newPassword": "New password (min 8 chars)",
+      "updateAccount": "Update account",
+      "updatePasswordBtn": "Update password"
+    },
+    "validation": {
+      "required": "This field is required",
+      "passwordMin": "Password needs a minimum of 8 characters"
+    }
+  },
+  "cart": {
+    "heading": "Cart",
+    "empty": "Empty cart",
+    "total": "Total: {{amount}}",
+    "customerName": "Customer name",
+    "customerPlaceholder": "Enter customer name",
+    "customerRequired": "Please enter customer name",
+    "confirmOrder": "Confirm order",
+    "creatingOrder": "Creating order...",
+    "itemLine": "{{qty}} × {{name}} - {{total}}"
+  },
+  "integrations": {
+    "heading": "Automations & Integrations",
+    "google": {
+      "title": "Google Account",
+      "checking": "Checking...",
+      "connected": "Connected",
+      "notConnected": "Not connected",
+      "connect": "Connect Google",
+      "active": "✓ Active",
+      "description": "Connecting your Google account enables Calendar reminders for expiring items and automatic daily report uploads to Google Drive."
+    },
+    "badgeAutoDaily": "Auto • Runs Daily",
+    "features": {
+      "expiryNotifications": {
+        "title": "Expiry Notifications",
+        "description": "Automatically sends email alerts to admins when items are expiring today or within 5 days."
+      },
+      "calendarReminders": {
+        "title": "Google Calendar Reminders",
+        "description": "Adds expiry events directly to your Google Calendar so you never miss a critical date."
+      },
+      "autoDiscount": {
+        "title": "Auto Discount",
+        "description": "Items expiring within 20 days automatically get a 25% discount applied to reduce waste."
+      },
+      "autoExpireOrders": {
+        "title": "Auto Expire Orders",
+        "description": "Pending orders older than 4 hours are automatically marked as expired."
+      },
+      "dailyReport": {
+        "title": "Daily Report to Google Drive",
+        "description": "A CSV report of today's orders is generated and uploaded to your Google Drive every midnight."
+      }
+    }
+  },
+  "reports": {
+    "heading": "Sales Report",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "waiterName": "Waiter name",
+    "waiterPlaceholder": "Search waiter...",
+    "apply": "Apply",
+    "exportCsv": "Export CSV",
+    "exportSuccess": "CSV exported successfully!",
+    "exportError": "Failed to export CSV",
+    "empty": "No data found for the selected period.",
+    "unknown": "Unknown",
+    "stats": {
+      "totalRevenue": "Total revenue",
+      "totalItemsSold": "Total items sold",
+      "totalCommission": "Total commission",
+      "waiters": "Waiters"
+    },
+    "chart": {
+      "title": "Revenue & commission per waiter",
+      "revenue": "Revenue",
+      "commission": "Commission"
+    },
+    "table": {
+      "title": "Waiter breakdown",
+      "waiter": "Waiter",
+      "itemsSold": "Items sold",
+      "revenue": "Revenue",
+      "commission": "Commission",
+      "food": "Food",
+      "beverages": "Beverages",
+      "others": "Others"
+    },
+    "currency": "EGP {{amount}}"
+  },
+  "dashboard": {
+    "heading": "Dashboard",
+    "filter": {
+      "last7": "Last 7 days",
+      "last30": "Last 30 days",
+      "last90": "Last 90 days"
+    },
+    "stats": {
+      "orders": "Orders",
+      "sales": "Sales",
+      "customers": "Customer numbers",
+      "avgOrderValue": "Avg order value"
+    },
+    "today": {
+      "title": "Today",
+      "noActivity": "No activity today..",
+      "tag": "Today",
+      "orderNumber": "Order number {{id}}",
+      "complete": "Complete"
+    },
+    "salesChart": {
+      "noData": "No sales data available",
+      "title": "Sales from {{from}} — {{to}}",
+      "completedSales": "Completed sales",
+      "pendingSales": "Pending sales",
+      "extrasSales": "Extras sales"
+    },
+    "charts": {
+      "noData": "No data available",
+      "byValueRange": "Orders by value range",
+      "byStatus": "Orders by status",
+      "valueRange": {
+        "low": "Low ($0-50)",
+        "medium": "Medium ($51-100)",
+        "high": "High ($101-200)",
+        "premium": "Premium ($201+)"
+      }
+    }
+  }
+}

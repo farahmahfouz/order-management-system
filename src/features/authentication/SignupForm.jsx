@@ -1,13 +1,21 @@
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { useSignup } from "./useSignup";
-import Select from './../../ui/Select';
+import Select from "../../ui/Select";
 
+const ROLE_OPTIONS = [
+  "super_admin",
+  "manager",
+  "cashier",
+  "waiter",
+];
 
 function SignupForm() {
+  const { t } = useTranslation();
   const { signup, isLoading } = useSignup();
   const { register, formState, handleSubmit, reset, control } = useForm();
   const { errors } = formState;
@@ -23,49 +31,49 @@ function SignupForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label="Name" error={errors?.name?.message}>
+      <FormRow label={t("employees.form.name")} error={errors?.name?.message}>
         <Input
           type="text"
           id="name"
           disabled={isLoading}
           {...register("name", {
-            required: "This field is required",
+            required: t("employees.validation.required"),
             minLength: {
               value: 10,
-              message: "Name must be at least 10 characters long",
+              message: t("employees.validation.nameMin"),
             },
           })}
         />
       </FormRow>
 
-      <FormRow label="Email address" error={errors?.email?.message}>
+      <FormRow label={t("employees.form.email")} error={errors?.email?.message}>
         <Input
           type="email"
           id="email"
           disabled={isLoading}
           {...register("email", {
-            required: "This field is required",
+            required: t("employees.validation.required"),
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: "Please provide a valid email address",
+              message: t("employees.validation.emailInvalid"),
             },
           })}
         />
       </FormRow>
 
-      <FormRow label="Role" error={errors?.role?.message}>
+      <FormRow label={t("employees.form.role")} error={errors?.role?.message}>
         <Controller
           name="role"
           control={control}
-          rules={{ required: "This field is required" }}
+          rules={{ required: t("employees.validation.required") }}
           render={({ field }) => (
             <Select
               options={[
-                { value: "", label: "Select a role" },
-                { value: "super_admin", label: "Super Admin" },
-                { value: "manager", label: "Manager" },
-                { value: "cashier", label: "Cashier" },
-                { value: "waiter", label: "Waiter" },
+                { value: "", label: t("employees.form.selectRole") },
+                ...ROLE_OPTIONS.map((role) => ({
+                  value: role,
+                  label: t(`employees.roles.${role}`),
+                })),
               ]}
               disabled={isLoading}
               {...field}
@@ -74,9 +82,8 @@ function SignupForm() {
         />
       </FormRow>
 
-
       <FormRow
-        label="Password (min 8 characters)"
+        label={t("employees.form.password")}
         error={errors?.password?.message}
       >
         <Input
@@ -84,26 +91,25 @@ function SignupForm() {
           id="password"
           disabled={isLoading}
           {...register("password", {
-            required: "This field is required",
+            required: t("employees.validation.required"),
             minLength: {
               value: 8,
-              message: "Password needs a minimum of 8 characters",
+              message: t("employees.validation.passwordMin"),
             },
           })}
         />
       </FormRow>
 
       <FormRow>
-        {/* type is an HTML attribute! */}
         <Button
           variation="secondary"
           type="reset"
           disabled={isLoading}
           onClick={reset}
         >
-          Cancel
+          {t("common.cancel")}
         </Button>
-        <Button disabled={isLoading}>Create new user</Button>
+        <Button disabled={isLoading}>{t("employees.form.createUser")}</Button>
       </FormRow>
     </Form>
   );

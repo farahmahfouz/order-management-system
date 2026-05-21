@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 
 import Row from "../../ui/Row";
 import Heading from "../../ui/Heading";
@@ -25,6 +27,8 @@ const HeadingGroup = styled.div`
 `;
 
 function OrderDetail() {
+    const { t } = useTranslation();
+    const isRTL = i18n.language === "ar";
     const { isLoading, order } = useOrder();
     const { isCancel, cancelOrder } = useCancelOrder();
     const { isComplete, completeOrder } = useCompleteOrder();
@@ -33,64 +37,77 @@ function OrderDetail() {
     const navigate = useNavigate();
 
     if (isLoading) return <Spinner />;
-    if (!order) return <Empty resourceName="order" />;
+    if (!order) return <Empty resourceName={t("orders.details.notFound")} />;
 
     const { status, _id: orderId } = order;
 
     const statusToTagName = {
         pending: "blue",
-        "completed": "green",
-        "cancelled": "silver",
-        "expired": "red"
+        completed: "green",
+        cancelled: "silver",
+        expired: "red",
     };
 
-    function handleCompleteOrder(orderId) {
-        completeOrder(orderId, {
+    function handleCompleteOrder(id) {
+        completeOrder(id, {
             onSuccess: () => {
-                navigate('/orders')
-            }
-        })
+                navigate("/orders");
+            },
+        });
     }
 
     return (
         <>
             <Row type="horizontal">
                 <HeadingGroup>
-                    <Heading as="h1">Booking #{orderId.slice(0, 5)}</Heading>
-                    <Tag type={statusToTagName[status]}>{status}</Tag>
+                    <Heading as="h1">
+                        {t("orders.details.title", { id: orderId.slice(0, 5) })}
+                    </Heading>
+                    <Tag type={statusToTagName[status]}>
+                        {t(`orders.filter.${status}`)}
+                    </Tag>
                 </HeadingGroup>
-                <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+                <ButtonText onClick={moveBack}>
+                    {isRTL ? <span>&rarr;</span> : <span>&larr;</span>}{" "}
+                    {t("common.back")}
+                </ButtonText>
             </Row>
 
             <OrderDataBox order={order} />
 
             <ButtonGroup>
                 {status === "pending" && (
-                    <Button onClick={() => handleCompleteOrder(orderId)} disabled={isComplete}>
-                        Complete
+                    <Button
+                        onClick={() => handleCompleteOrder(orderId)}
+                        disabled={isComplete}
+                    >
+                        {t("orders.complete")}
                     </Button>
                 )}
 
-                {status === 'pending' && <Modal>
-                    <Modal.Open opens="delete">
-                        <Button variation="danger">Cancel Order</Button>
-                    </Modal.Open>
+                {status === "pending" && (
+                    <Modal>
+                        <Modal.Open opens="delete">
+                            <Button variation="danger">
+                                {t("orders.cancelOrder")}
+                            </Button>
+                        </Modal.Open>
 
-                    <Modal.Window name="delete">
-                        <ConfirmDelete
-                            resourceName="order"
-                            disabled={isCancel}
-                            onConfirm={() =>
-                                cancelOrder(orderId, {
-                                    onSettled: () => navigate(-1),
-                                })
-                            }
-                        />
-                    </Modal.Window>
-                </Modal>
-                }
+                        <Modal.Window name="delete">
+                            <ConfirmDelete
+                                resourceName="order"
+                                disabled={isCancel}
+                                onConfirm={() =>
+                                    cancelOrder(orderId, {
+                                        onSettled: () => navigate(-1),
+                                    })
+                                }
+                            />
+                        </Modal.Window>
+                    </Modal>
+                )}
                 <Button variation="secondary" onClick={moveBack}>
-                    Back
+                    {t("common.back")}
                 </Button>
             </ButtonGroup>
         </>
