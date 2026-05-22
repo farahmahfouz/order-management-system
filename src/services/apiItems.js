@@ -35,8 +35,26 @@ export const createItem = async (data) => {
   return response.data;
 };
 
-export const updateItem = async (newItemData, id) => {
-  const response = await axiosInstance.patch(`items/${id}`, newItemData);
+export const updateItem = async (data, id) => {
+  const formData = new FormData();
+
+  formData.append("name", data.name);
+  formData.append("price", data.price);
+  formData.append("category", data.category);
+  formData.append("expiryDate", data.expiryDate);
+  formData.append("description", data.description);
+  formData.append("stockQuantity", data.stockQuantity);
+
+  if (data.image) {
+    formData.append("image", data.image);
+  }
+
+  const response = await axiosInstance.patch(`items/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
   return response.data;
 };
 
@@ -47,7 +65,7 @@ export const getOneItem = async (id) => {
 
 export const handleDownload = async () => {
   const response = await axiosInstance.get("items/export", {
-    responseType: "blob", 
+    responseType: "blob",
   });
 
   const blob = new Blob([response.data], { type: "text/csv" });
@@ -60,7 +78,6 @@ export const handleDownload = async () => {
   link.click();
   link.remove();
 };
-
 
 export const handleUpload = async (file) => {
   const formData = new FormData();
