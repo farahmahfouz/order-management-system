@@ -1,4 +1,9 @@
 {
+  "header": {
+    "account": "Account",
+    "darkMode": "Dark mode",
+    "logout": "Log out"
+  },
   "nav": {
     "home": "Home",
     "items": "Items",
@@ -18,6 +23,8 @@
     "seeDetails": "See details",
     "clear": "Clear",
     "search": "Search",
+    "cart": "Cart",
+    "changeLanguage": "Change Language",
     "submit": "Submit",
     "addToCart": "Add To Cart",
     "deleteTitle": "Delete {{resource}}",

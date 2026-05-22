@@ -1,4 +1,9 @@
 {
+  "header": {
+    "account": "الحساب",
+    "darkMode": "الوضع الداكن",
+    "logout": "تسجيل الخروج"
+  },
   "nav": {
     "home": "الرئيسية",
     "items": "المنتجات",
@@ -17,6 +22,8 @@
     "back": "رجوع",
     "seeDetails": "عرض التفاصيل",
     "clear": "مسح",
+    "cart": "عربة التسوق",
+    "changeLanguage": "تغيير اللغة",
     "search": "بحث",
     "submit": "إرسال",
     "addToCart": "أضف الى السلة",

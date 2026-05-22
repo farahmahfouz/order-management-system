@@ -1,43 +1,40 @@
 import styled from "styled-components";
-import Logout from "../features/authentication/Logout";
 import ButtonIcon from "./ButtonIcon";
-import { HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi2";
+import { HiOutlineShoppingCart } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-import DarkModeToggle from "./DarkModeToggle";
-import UserAvatar from "../features/authentication/UserAvatar";
 import LanguageToggle from "./LanguageToggle";
+import HeaderUserMenu from "./HeaderUserMenu";
+import { useTranslation } from "react-i18next";
+import { TooltipText, TooltipWrapper } from "../features/items/ItemTableOperations";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
+  align-items: center;
   gap: 0.4rem;
 `;
 
 function HeaderMenu() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <StyledHeaderMenu>
       <li>
-        <UserAvatar />
+        <HeaderUserMenu />
       </li>
       <li>
-        <ButtonIcon onClick={() => navigate("/cart")}>
-          <HiOutlineShoppingCart />
-        </ButtonIcon>
+        <TooltipWrapper>
+          <ButtonIcon onClick={() => navigate("/cart")}>
+            <HiOutlineShoppingCart />
+          </ButtonIcon>
+          <TooltipText className="tooltip-text">{t("common.cart")}</TooltipText>
+        </TooltipWrapper>
       </li>
       <li>
-        <ButtonIcon onClick={() => navigate("/account")}>
-          <HiOutlineUser />
-        </ButtonIcon>
-      </li>
-      <li>
-        <LanguageToggle />
-      </li>
-      <li>
-        <DarkModeToggle />
-      </li>
-      <li>
-        <Logout />
+        <TooltipWrapper>
+          <LanguageToggle />
+          <TooltipText className="tooltip-text">{t("common.changeLanguage")}</TooltipText>
+        </TooltipWrapper>
       </li>
     </StyledHeaderMenu>
   );

@@ -29,6 +29,19 @@ const StyledToggle = styled.button`
   }
 `;
 
+const StyledAvatarToggle = styled.button`
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--color-grey-100);
+  }
+`;
+
 const StyledList = styled.ul`
   position: fixed;
   background-color: var(--color-grey-0);
@@ -45,12 +58,14 @@ const StyledList = styled.ul`
 `;
 const StyledButton = styled.button`
   width: 100%;
-  text-align: left;
+  min-width: 20rem;
+  text-align: start;
   background: none;
   border: none;
   padding: 1.2rem 2.4rem;
   font-size: 1.4rem;
   transition: all 0.2s;
+  white-space: nowrap;
 
   display: flex;
   align-items: center;
@@ -86,6 +101,15 @@ function Menus({ children }) {
   );
 }
 
+function getMenuPosition(rect) {
+  const isRTL = document.documentElement.dir === "rtl";
+
+  return {
+    x: isRTL ? rect.left : window.innerWidth - rect.right,
+    y: rect.y + rect.height + 8,
+  };
+}
+
 function Toggle({ id }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
@@ -93,12 +117,7 @@ function Toggle({ id }) {
     e.stopPropagation();
 
     const rect = e.target.closest("button").getBoundingClientRect();
-    const isRTL = document.documentElement.dir === 'rtl';
-
-    setPosition({
-      x: isRTL ? rect.x : window.innerWidth - rect.width - rect.x,
-      y: rect.y + rect.height + 8,
-    });
+    setPosition(getMenuPosition(rect));
     openId === "" || openId !== id ? open(id) : close();
   }
 
@@ -106,6 +125,24 @@ function Toggle({ id }) {
     <StyledToggle onClick={handleClick}>
       <HiEllipsisVertical />
     </StyledToggle>
+  );
+}
+
+function AvatarToggle({ id, children }) {
+  const { openId, close, open, setPosition } = useContext(MenusContext);
+
+  function handleClick(e) {
+    e.stopPropagation();
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    setPosition(getMenuPosition(rect));
+    openId === "" || openId !== id ? open(id) : close();
+  }
+
+  return (
+    <StyledAvatarToggle type="button" onClick={handleClick}>
+      {children}
+    </StyledAvatarToggle>
   );
 }
 
@@ -149,6 +186,7 @@ function Button({ children, icon, onClick }) {
 
 Menus.Menu = Menu;
 Menus.Toggle = Toggle;
+Menus.AvatarToggle = AvatarToggle;
 Menus.List = List;
 Menus.Button = Button;
 

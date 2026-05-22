@@ -12,7 +12,7 @@ import { MdUpload } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
 
-const TooltipWrapper = styled.div`
+export const TooltipWrapper = styled.div`
   position: relative;
   display: inline-block;
 
@@ -22,7 +22,7 @@ const TooltipWrapper = styled.div`
   }
 `;
 
-const TooltipText = styled.div`
+export const TooltipText = styled.div`
   visibility: hidden;
   background-color: #333;
   color: #fff;

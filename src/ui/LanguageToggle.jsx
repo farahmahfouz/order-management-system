@@ -4,7 +4,7 @@ import ButtonIcon from './ButtonIcon';
 function LanguageToggle() {
     const { language, toggleLanguage } = useLanguage();
     return (
-        <ButtonIcon onClick={toggleLanguage} title={language === "en" ? "العربية" : "English"}>{language === 'en' ? 'ع' : 'EN'}</ButtonIcon>
+        <ButtonIcon onClick={toggleLanguage} title={language === "en" ? "العربية" : "English"}>{language === 'en' ? 'AR' : 'EN'}</ButtonIcon>
     )
 }
 
