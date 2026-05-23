@@ -31,15 +31,25 @@ const Label = styled.label`
   font-weight: 500;
 `;
 
+const Required = styled.span`
+  color: var(--color-red-700);
+  margin-inline-start: 0.2rem;
+`;
+
 const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
 `;
 
-function FormRow({ label, error, children }) {
+function FormRow({ label, error, children, required }) {
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children.props.id}>{label}</Label>}
+      {label && (
+        <Label htmlFor={children?.props?.id}>
+          {label}
+          {required && <Required aria-hidden="true">*</Required>}
+        </Label>
+      )}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>

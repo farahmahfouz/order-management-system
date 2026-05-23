@@ -43,7 +43,8 @@ function ItemDetails() {
     const navigate = useNavigate();
 
     function handleAddToCart() {
-        addToCart(item);
+        const added = addToCart(item);
+        if (!added) return;
         toast.success(t("items.details.addedToCart"));
         navigate("/cart");
     }

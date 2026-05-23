@@ -15,7 +15,8 @@ function useCreateOrder() {
       });
     },
     onError: (err) => {
-      toast.error(err.message);
+      const message = err.response?.data?.message || err.message;
+      toast.error(message);
     },
   });
 

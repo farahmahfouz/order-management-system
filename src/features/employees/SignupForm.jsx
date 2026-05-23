@@ -4,7 +4,7 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
-import { useSignup } from "./useSignup";
+import { useSignup } from "../employees/useSignup";
 import Select from "../../ui/Select";
 
 const ROLE_OPTIONS = [
@@ -14,7 +14,7 @@ const ROLE_OPTIONS = [
   "waiter",
 ];
 
-function SignupForm() {
+function SignupForm({ onCloseModal }) {
   const { t } = useTranslation();
   const { signup, isLoading } = useSignup();
   const { register, formState, handleSubmit, reset, control } = useForm();
@@ -30,11 +30,12 @@ function SignupForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label={t("employees.form.name")} error={errors?.name?.message}>
+    <Form onSubmit={handleSubmit(onSubmit)} type={onCloseModal ? 'modal' : 'regular'}>
+      <FormRow label={t("employees.form.name")} error={errors?.name?.message} required>
         <Input
           type="text"
           id="name"
+          required
           disabled={isLoading}
           {...register("name", {
             required: t("employees.validation.required"),
@@ -46,10 +47,12 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label={t("employees.form.email")} error={errors?.email?.message}>
+      <FormRow label={t("employees.form.email")} error={errors?.email?.message} required>
         <Input
           type="email"
           id="email"
+          required
+          autoComplete="email"
           disabled={isLoading}
           {...register("email", {
             required: t("employees.validation.required"),
@@ -61,7 +64,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label={t("employees.form.role")} error={errors?.role?.message}>
+      <FormRow label={t("employees.form.role")} error={errors?.role?.message} required>
         <Controller
           name="role"
           control={control}
@@ -85,10 +88,12 @@ function SignupForm() {
       <FormRow
         label={t("employees.form.password")}
         error={errors?.password?.message}
+        required
       >
         <Input
           type="password"
           id="password"
+          autoComplete="new-password"
           disabled={isLoading}
           {...register("password", {
             required: t("employees.validation.required"),

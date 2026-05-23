@@ -96,7 +96,7 @@ function ItemRow({ item }) {
 
   function handleAddToCart() {
     addToCart(item);
-    toast.success("Item added to cart successfully");
+    toast.success(t("items.details.addedToCart"));
   }
 
   return (

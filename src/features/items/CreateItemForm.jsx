@@ -26,7 +26,6 @@ function CreateItemForm({ itemToEdit = {}, onCloseModal }) {
 
     const { errors } = formState;
 
-
     const onSubmit = (data) => {
         const image = data.image[0];
         const payload = { ...data, image };

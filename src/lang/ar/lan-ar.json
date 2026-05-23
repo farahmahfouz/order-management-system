@@ -2,6 +2,7 @@
   "header": {
     "account": "الحساب",
     "darkMode": "الوضع الداكن",
+    "lighMode": "الوضع الفاتح",
     "logout": "تسجيل الخروج"
   },
   "nav": {
@@ -135,20 +136,26 @@
     "cancelOrder": "إلغاء الطلب"
   },
   "employees": {
-    "heading": "إنشاء مستخدم جديد",
+    "heading": "كل الموظفين",
     "form": {
       "name": "الاسم",
       "email": "البريد الإلكتروني",
       "role": "الدور",
       "password": "كلمة المرور (8 أحرف على الأقل)",
       "selectRole": "اختر الدور",
-      "createUser": "إنشاء مستخدم جديد"
+      "createUser": "إنشاء مستخدم جديد",
+      "createdAt": "تاريخ بدء العمل"
     },
     "roles": {
+      "all": "الكل",
       "super_admin": "مدير النظام",
       "manager": "مدير",
       "cashier": "كاشير",
       "waiter": "ويتر"
+    },
+    "sort": {
+      "nameDesc": "ترتيب بالاسم (الأحدث أولاً)",
+      "nameAsc": "ترتيب بالاسم (الأقدم أولاً)"
     },
     "validation": {
       "required": "هذا الحقل مطلوب",
@@ -184,7 +191,10 @@
     "customerRequired": "يرجى إدخال اسم العميل",
     "confirmOrder": "تأكيد الطلب",
     "creatingOrder": "جاري إنشاء الطلب...",
-    "itemLine": "{{qty}} × {{name}} - {{total}}"
+    "itemLine": "{{qty}} × {{name}} - {{total}}",
+    "stockLimit": "فاضل {{count}} بس في الكمية",
+    "outOfStock": "المنتج غير متوفر حالياً",
+    "orderBlockedStock": "مش هنقدر نأكد الطلب: الكمية المطلوبة أكبر من المتوفر."
   },
   "integrations": {
     "heading": "الأتمتة والتكاملات",

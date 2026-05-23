@@ -76,8 +76,10 @@ function OrderRow({
                 <span>{cashierName}</span>
                 <span>{email}</span>
             </Stacked>
-            <Stacked>{format(new Date(createdAt), "MMM dd yyyy")}</Stacked>
-
+            <Stacked>
+                <span>{format(new Date(createdAt), "MMM dd yyyy")}</span>
+                <span>{format(new Date(createdAt), "hh:mm a")}</span>
+            </Stacked>
             <Tag type={statusToTagName[status]}>
                 {t(`orders.filter.${status}`)}
             </Tag>

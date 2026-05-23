@@ -2,6 +2,7 @@
   "header": {
     "account": "Account",
     "darkMode": "Dark mode",
+    "lighMode": "Light mode",
     "logout": "Log out"
   },
   "nav": {
@@ -135,20 +136,26 @@
     "cancelOrder": "Cancel order"
   },
   "employees": {
-    "heading": "Create a new user",
+    "heading": "All Employees",
     "form": {
       "name": "Name",
       "email": "Email address",
       "role": "Role",
       "password": "Password (min 8 characters)",
       "selectRole": "Select a role",
-      "createUser": "Create new user"
+      "createUser": "Create new user",
+      "createdAt": "Joined At"
     },
     "roles": {
+      "all": "All",
       "super_admin": "Super Admin",
       "manager": "Manager",
       "cashier": "Cashier",
       "waiter": "Waiter"
+    },
+    "sort": {
+      "nameDesc": "Sort by name (recent first)",
+      "nameAsc": "Sort by name (earlier first)"
     },
     "validation": {
       "required": "This field is required",
@@ -184,7 +191,10 @@
     "customerRequired": "Please enter customer name",
     "confirmOrder": "Confirm order",
     "creatingOrder": "Creating order...",
-    "itemLine": "{{qty}} × {{name}} - {{total}}"
+    "itemLine": "{{qty}} × {{name}} - {{total}}",
+    "stockLimit": "Only {{count}} left in stock",
+    "outOfStock": "This item is out of stock",
+    "orderBlockedStock": "Cannot place order: requested quantity is more than available stock."
   },
   "integrations": {
     "heading": "Automations & Integrations",

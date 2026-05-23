@@ -13,6 +13,14 @@ import Input from "../../ui/Input";
 import FormRow from "../../ui/FormRow";
 import toast from "react-hot-toast";
 
+const CartList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+`;
+
 const P = styled.p`
   color: var(--color-brand-400);
   font-weight: 500;
@@ -67,11 +75,11 @@ function CartBox() {
     <>
       <Form>
         {cartItems?.length > 0 ? (
-          <ul>
+          <CartList>
             {cartItems.map((item) => (
               <CartItem key={item._id} item={item} />
             ))}
-          </ul>
+          </CartList>
         ) : (
           <P>{t("cart.empty")}</P>
         )}
@@ -81,10 +89,11 @@ function CartBox() {
             <Total>
               {t("cart.total", { amount: formatCurrency(total) })}
             </Total>
-            <FormRow label={t("cart.customerName")}>
+            <FormRow label={t("cart.customerName")} required>
               <Input
                 type="text"
                 id="customerName"
+                required
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder={t("cart.customerPlaceholder")}

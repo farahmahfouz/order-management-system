@@ -1,8 +1,14 @@
-import axios from "axios";
-import { API_URL } from './../utils/constant';
+import axiosInstance from "./axiosInstance";
 
+export async function getUsers({ page, limit, filter, sort }) {
+  const params = { page, limit };
 
-export async function getUsers() {
-    const response = await axios.get(`${API_URL}users`);
-    return response;
+  if (filter?.field && filter?.value) {
+    params[filter.field] = filter.value;
+  }
+
+  if (sort) params.sort = sort;
+
+  const response = await axiosInstance.get("users", { params });
+  return response.data;
 }

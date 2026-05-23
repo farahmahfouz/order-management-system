@@ -9,7 +9,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const IconButton = styled.button`
+export const IconButton = styled.button`
   position: absolute;
   right: 1.5rem;
   background: none;

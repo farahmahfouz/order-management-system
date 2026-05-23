@@ -35,7 +35,7 @@ function Stats({ orders }) {
         title={t("dashboard.stats.sales")}
         color="green"
         icon={<HiOutlineBanknotes />}
-        value={formatCurrency(sales) || 0}
+        value={formatCurrency(sales) ?? 0}
       />
       <Stat
         title={t("dashboard.stats.customers")}

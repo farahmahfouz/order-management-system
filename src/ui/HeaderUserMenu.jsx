@@ -38,7 +38,7 @@ function HeaderUserMenu() {
             icon={isDarkMode ? <HiOutlineSun /> : <HiOutlineMoon />}
             onClick={toggleDarkMode}
           >
-            {t("header.darkMode")}
+            {isDarkMode ? t("header.lighMode") : t("header.darkMode")}
           </Menus.Button>
 
           <Menus.Button
