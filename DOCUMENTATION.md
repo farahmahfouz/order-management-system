@@ -115,6 +115,13 @@ src/
     └── constants.js
 ```
 
+## 📸 Screenshots
+
+ ![Items](./public/items.png) 
+ ![Orders](./public/orders.png) 
+ ![Google](./public/google.png) |
+
+
 ### Feature Folder Pattern
 
 Each feature typically contains:
