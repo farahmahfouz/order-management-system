@@ -43,7 +43,7 @@ function App() {
             <BrowserRouter>
               <Routes>
                 <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
-                  <Route index element={<Navigate replace to='dashboard' />} />
+                  <Route index element={<Navigate replace to='/login' />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="items" element={<Items />} />
                   <Route path="items/:itemId" element={<Item />} />

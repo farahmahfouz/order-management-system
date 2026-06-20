@@ -6,7 +6,7 @@ export function useUser() {
     queryKey: ["user"],
     queryFn: getCurrentUser,
     // enabled: false,
-    // retry: false,
+    retry: false,
   });
   const isAuthenticated = Boolean(user && user.isVerified === true);
 

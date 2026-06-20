@@ -10,10 +10,19 @@ export const signup = async (credientials) => {
   return response.data.data.user;
 };
 
-export const getCurrentUser = async (credientials) => {
-  const response = await axiosInstance.get("/users/me", credientials);
-  return response.data.data.user;
-};
+export async function getCurrentUser() {
+  try {
+    const { data } = await axiosInstance.get("/users/me");
+
+    return data.data.user;
+  } catch (err) {
+    if (err.response?.status === 401) {
+      return null;
+    }
+
+    throw err;
+  }
+}
 
 export const logout = async () => {
   await axiosInstance.get("/users/logout");
