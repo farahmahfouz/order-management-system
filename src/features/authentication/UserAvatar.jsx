@@ -28,7 +28,7 @@ function UserAvatar() {
 
   useEffect(() => {
     if (user) setAvatarSrc(getUserAvatarSrc(user.image));
-  }, [user?.image]);
+  }, [user]);
 
   if (isLoading || !user) return null;
 
